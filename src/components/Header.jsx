@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
 const Header = () => {
-    const [price, setPrice] = useState();
-    const getPrice = (symbol) => {
+    const [price, setPrice] = useState({});
+    useEffect(() => {
         const ws = new WebSocket(`wss://stream.binance.com:9443/ws`);
         ws.onopen = () => {
             console.log("Connection Successfull");
@@ -14,19 +14,9 @@ const Header = () => {
         }
         ws.onmessage = (e) => {
             const dataJson = JSON.parse(e.data);
-            // console.log(dataJson);
-            let _price = dataJson.p;
-            let symbol = dataJson.s;
-            let something = { [symbol]: _price };
-            console.log("Something  : ", something);
-            setPrice({ ...price, [dataJson.p]: dataJson.s });
-            // setPrice({ ...price, [symbol]: _price });
-
-            console.log("Price : ", ...price);
+            if (dataJson.s)
+                setPrice((prevPrize) => { console.log(prevPrize); return { ...prevPrize, [dataJson.s]: dataJson.p } });
         }
-    }
-    useEffect(() => {
-        getPrice(crypto);
     }, []);
 
     return (
@@ -34,11 +24,14 @@ const Header = () => {
             <h1>Header</h1>
             {price &&
                 Object.keys(price).map((key, index) => {
+                    console.log("Price : ", price)
                     return (
-                        <div key={index}>
-                            <span>{key}</span>
-                            <span>{price[key]}</span>
-                        </div>
+                        <>
+                            <div key={index}>
+                                <span>{key}</span>
+                                <span>{price[key]}</span>
+                            </div>
+                        </>
                     )
                 }
                 )
