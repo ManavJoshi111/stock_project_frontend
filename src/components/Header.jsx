@@ -36,6 +36,28 @@ const Header = () => {
                 }
                 )
             }
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Symbol</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {price &&
+
+                        Object.keys(price).map((key, index) => {
+                            console.log("Price : ", price)
+                            return (
+                                <tr key={index}>
+                                    <td>{key}</td>
+                                    <td>{price[key]}</td>
+                                </tr>
+                            )
+                        })
+                    }
+                </tbody>
+            </table>
         </>
     );
 }
