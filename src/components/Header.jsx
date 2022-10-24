@@ -1,7 +1,16 @@
-import React, { useEffect, useState } from 'react'
-
+import React, { useEffect, useState } from 'react';
+import "../styles/index.css";
 const Header = () => {
     const [price, setPrice] = useState({});
+    const [color, setColor] = useState({
+        shibusdt: "black",
+        adxbtc: "black",
+        bnbusd: "black",
+        aptbusd: "black",
+        ethbusd: "black",
+        ethbtc: "black",
+        dfbusd: "black"
+    });
     useEffect(() => {
         const ws = new WebSocket(`wss://stream.binance.com:9443/ws`);
         ws.onopen = () => {
@@ -15,27 +24,28 @@ const Header = () => {
         ws.onmessage = (e) => {
             const dataJson = JSON.parse(e.data);
             if (dataJson.s)
-                setPrice((prevPrize) => { console.log(prevPrize); return { ...prevPrize, [dataJson.s]: dataJson.p } });
+                setPrice(
+                    (prevPrize) => {
+                        console.log("Prevprize is : ", prevPrize);
+                        // dataJson.p and prevPrize[dataJson.s] to be compared
+                        if (dataJson.p > prevPrize[dataJson.s]) {
+                            setColor({ ...color, [dataJson.s.toLowerCase()]: "green" });
+                        }
+                        else if (dataJson.p < prevPrize[dataJson.s]) {
+                            setColor({ ...color, [dataJson.s.toLowerCase()]: "red" });
+                        }
+                        // else {
+                        //     setColor({ ...color, [dataJson.s.toLowerCase()]: "black" });
+                        // }
+                        return { ...prevPrize, [dataJson.s]: dataJson.p }
+                    }
+                );
         }
     }, []);
 
     return (
         <>
-            <h1>Header</h1>
-            {price &&
-                Object.keys(price).map((key, index) => {
-                    console.log("Price : ", price)
-                    return (
-                        <>
-                            <div key={index}>
-                                <span>{key}</span>
-                                <span>{price[key]}</span>
-                            </div>
-                        </>
-                    )
-                }
-                )
-            }
+            <center><h1>Real Time Data</h1></center>
             <table className="table">
                 <thead>
                     <tr>
@@ -47,12 +57,14 @@ const Header = () => {
                     {price &&
 
                         Object.keys(price).map((key, index) => {
-                            console.log("Price : ", price)
+                            console.log("Color is : ", color);
                             return (
-                                <tr key={index}>
-                                    <td>{key}</td>
-                                    <td>{price[key]}</td>
-                                </tr>
+                                <>
+                                    <tr key={index}>
+                                        <td>{key}</td>
+                                        <td className={color[key.toLowerCase()]}>{price[key]}</td>
+                                    </tr>
+                                </>
                             )
                         })
                     }
