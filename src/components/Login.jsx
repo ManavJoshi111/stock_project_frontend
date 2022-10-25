@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
 import "../CSS/login_and_signup.css";
 
 const Login = () => {
@@ -21,10 +22,24 @@ const Login = () => {
       body: JSON.stringify(data),
     });
     const content = await response.json();
-    if (content.success === "true") {
-      alert("Login Successful");
+    console.log("Response : ", content);
+    if (content.success == "true") {
+      toast.success("Login Successfull", {
+        position: "top-center",
+        autoClose: 1000,
+        closeOnClick: true,
+        draggable: true,
+        theme: "dark"
+      });
     } else {
-      alert("Login Unsuccesful");
+      console.log("Login Unsuccesful");
+      toast.error(content.error, {
+        position: "top-center",
+        autoClose: 1000,
+        closeOnClick: true,
+        draggable: true,
+        theme: "dark"
+      });
     }
     console.log("In senddata : ", content);
   };
@@ -66,7 +81,8 @@ const Login = () => {
               ></div>
 
               <div className="card bg-glass">
-                <div className="card-body px-4 py-5 px-md-5">
+                <h1 className='m-2 p-2 mb-0 pb-0 mx-4'>Login :</h1>
+                <div className="card-body px-4 py-5 px-md-5 pt-3">
                   <form>
                     <div className="form-outline mb-4">
                       <input
@@ -106,7 +122,7 @@ const Login = () => {
                         className="btn btn-primary btn-block mb-4"
                         onClick={sendData}
                       >
-                        Sign in
+                        Login
                       </button>
                     </center>
                   </form>

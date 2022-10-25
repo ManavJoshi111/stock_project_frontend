@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { toast } from "react-toastify";
 import '../CSS/login_and_signup.css';
 
 const Signup = () => {
@@ -20,11 +21,24 @@ const Signup = () => {
       body: JSON.stringify(data)
     });
     const content = await response.json();
+    console.log("Response : ", content);
     if (content.success === "true") {
-      alert("Signup Successful");
+      toast.success("Account Created!!!", {
+        position: "top-center",
+        autoClose: 1000,
+        closeOnClick: true,
+        draggable: true,
+        theme: "dark"
+      });
     }
     else {
-      alert("Signup Unsuccesful");
+      toast.error(content.error, {
+        position: "top-center",
+        autoClose: 1000,
+        closeOnClick: true,
+        draggable: true,
+        theme: "dark"
+      });
     }
     console.log("In senddata : ", content);
   }
@@ -92,8 +106,8 @@ const Signup = () => {
                   Subscribe to our newsletter
                 </label>
               </div> */}
-                  Do not have account?&nbsp;
-                  <NavLink to="/signup" className="mt-0">
+                  Already have an account?&nbsp;
+                  <NavLink to="/login" className="mt-0">
                     Click Here
                   </NavLink>
                   <br />

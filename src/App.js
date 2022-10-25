@@ -4,6 +4,8 @@ import {
   Routes,
   NavLink,
 } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import Login from './components/Login';
 import Signup from "./components/Signup";
@@ -21,6 +23,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
+      <ToastContainer style={{ width: "400px" }} />
     </>
   );
 }
