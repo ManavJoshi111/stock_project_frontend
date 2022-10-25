@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "../styles/index.css";
+import CheckUser from './CheckUser';
+
 const Header = () => {
     const [price, setPrice] = useState({});
     const [color, setColor] = useState({
@@ -12,6 +14,7 @@ const Header = () => {
         dfbusd: "black"
     });
     useEffect(() => {
+        CheckUser();
         // const ws = new WebSocket(`wss://stream.binance.com:9443/ws`);
         // ws.onopen = () => {
         //     ws.send(JSON.stringify({

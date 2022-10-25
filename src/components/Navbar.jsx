@@ -23,6 +23,9 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <NavLink className="nav-link active" aria-current="page" to="/signup">Sign Up</NavLink>
                             </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link active" aria-current="page" to="/profile">Profile</NavLink>
+                            </li>
                         </ul>
                     </div>
                 </div>

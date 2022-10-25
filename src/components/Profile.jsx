@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import "../styles/profile.css";
+import UserContext from '../Context/UserContext';
+import userEvent from '@testing-library/user-event';
+
 const Profile = () => {
+    const { user, setUser } = useContext(UserContext);
+    console.log("user in profile : ", user);
     return (
         <center>
             <h1>Manav H Joshi</h1>
@@ -13,7 +18,7 @@ const Profile = () => {
                                     <label>Name</label>
                                 </div>
                                 <div className="col-md-8">
-                                    <p>Manav H Joshi</p>
+                                    <p>{user.name}</p>
                                 </div>
                             </div>
                             <div className="row">
@@ -21,7 +26,7 @@ const Profile = () => {
                                     <label>Email</label>
                                 </div>
                                 <div className="col-md-8">
-                                    <p>Lorem, ipsum.</p>
+                                    <p>{user.email}</p>
                                 </div>
                             </div>
                             <div className="row">
@@ -29,7 +34,7 @@ const Profile = () => {
                                     <label>Phone</label>
                                 </div>
                                 <div className="col-md-8">
-                                    <p>32040384</p>
+                                    <p>{user.contact}</p>
                                 </div>
                             </div>
                         </div>

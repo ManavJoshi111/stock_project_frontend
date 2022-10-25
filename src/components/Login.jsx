@@ -1,12 +1,15 @@
 import React from "react";
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useState, useContext } from "react";
+import UserContext from "../Context/UserContext";
+import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../CSS/login_and_signup.css";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState();
-
+  const { user, setUser } = useContext(UserContext);
+  console.log("User is : ", user);
   const handleOnChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
 
@@ -31,6 +34,10 @@ const Login = () => {
         draggable: true,
         theme: "dark"
       });
+      console.log("Name : ", content.user.name);
+      setUser(() => { return { name: content.user.name, email: content.user.email, contact: content.user.contact } });
+      console.log("User is : ", user);
+      navigate("../");
     } else {
       console.log("Login Unsuccesful");
       toast.error(content.error, {
@@ -41,10 +48,10 @@ const Login = () => {
         theme: "dark"
       });
     }
-    console.log("In senddata : ", content);
   };
 
   return (
+
     <>
       <section className="background-radial-gradient overflow-hidden">
         <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5">

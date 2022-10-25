@@ -1,11 +1,11 @@
 import React from 'react'
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import '../CSS/login_and_signup.css';
 
 const Signup = () => {
-
+  const navigate = useNavigate();
   const [data, setData] = useState();
   const handleOnChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -30,6 +30,7 @@ const Signup = () => {
         draggable: true,
         theme: "dark"
       });
+      navigate("../");
     }
     else {
       toast.error(content.error, {
