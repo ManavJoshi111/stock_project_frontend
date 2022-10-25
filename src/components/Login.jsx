@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import "../CSS/login_and_signup.css";
 
 const Login = () => {
@@ -7,15 +8,16 @@ const Login = () => {
 
   const handleOnChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
-   
+
   };
   const sendData = async () => {
     console.log(data);
-    const response = await fetch("http://localhost:8000/login", {
+    const response = await fetch("http://localhost:8000/api/v1/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(data),
     });
     const content = await response.json();
@@ -92,53 +94,21 @@ const Login = () => {
                       </label>
                     </div>
 
-                    {/* <div className="form-check d-flex justify-content-center mb-4">
-                <input className="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
-                <label className="form-check-label" htmlFor="form2Example33">
-                  Subscribe to our newsletter
-                </label>
-              </div> */}
-
+                    Do not have account?&nbsp;
+                    <NavLink to="/signup" className="mt-0">
+                      Click Here
+                    </NavLink>
+                    <br />
+                    <br />
                     <center>
                       <button
-                        type="submit"
+                        type="button"
                         className="btn btn-primary btn-block mb-4"
                         onClick={sendData}
                       >
                         Sign in
                       </button>
                     </center>
-
-                    <div className="text-center">
-                      <p>or sign up with:</p>
-                      <button
-                        type="button"
-                        className="btn btn-link btn-floating mx-1"
-                      >
-                        <i className="fab fa-facebook-f"></i>
-                      </button>
-
-                      <button
-                        type="button"
-                        className="btn btn-link btn-floating mx-1"
-                      >
-                        <i className="fab fa-google"></i>
-                      </button>
-
-                      <button
-                        type="button"
-                        className="btn btn-link btn-floating mx-1"
-                      >
-                        <i className="fab fa-twitter"></i>
-                      </button>
-
-                      <button
-                        type="button"
-                        className="btn btn-link btn-floating mx-1"
-                      >
-                        <i className="fab fa-github"></i>
-                      </button>
-                    </div>
                   </form>
                 </div>
               </div>
@@ -146,22 +116,6 @@ const Login = () => {
           </div>
         </div>
       </section>
-
-      {/* ********************************************************************* */}
-      {/* <center className="h1 mt-2">Login</center>
-        <form className='container w-25 mt-3'>
-            <div className="form-outline mb-4">
-                <input type="email" id="form2Example1" className="form-control" name="email" onChange={handleOnChange} />
-                <label className="form-label" htmlhtmlFor="form2Example1">Email address</label>
-            </div>
-            <div className="form-outline mb-4">
-                <input type="password" id="form2Example2" className="form-control" name="password" onChange={handleOnChange} />
-                <label className="form-label" htmlhtmlFor="form2Example2">Password</label>
-            </div>
-            <center>
-                <button type="button" className="btn btn-primary btn-block mb-4" onClick={sendData}>Sign in</button>
-            </center>
-        </form> */}
     </>
   );
 };
