@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "../styles/index.css";
 import CheckUser from './CheckUser';
 
+import Chart from './Chart';
 const Header = () => {
     const [price, setPrice] = useState({});
     const [color, setColor] = useState({
@@ -39,6 +40,30 @@ const Header = () => {
         //             }
         //         );
         // }
+        const ws = new WebSocket(`wss://stream.binance.com:9443/ws`);
+        ws.onopen = () => {
+            ws.send(JSON.stringify({
+                method: 'SUBSCRIBE',
+                params: ["shibusdt@trade", "ethbtc@trade", "bnbbusd@trade", "aptbusd@trade", "ethbusd@trade", "dfbusd@trade", "xrpusdt@trade", "dogeusdt@trade"],
+                id: 1,
+            }));
+        }
+        ws.onmessage = (e) => {
+            const dataJson = JSON.parse(e.data);
+            if (dataJson.s)
+                setPrice(
+                    (prevPrize) => {
+                        // dataJson.p and prevPrize[dataJson.s] to be compared
+                        if (dataJson.p > prevPrize[dataJson.s]) {
+                            setColor({ ...color, [dataJson.s.toLowerCase()]: "green" });
+                        }
+                        else if (dataJson.p < prevPrize[dataJson.s]) {
+                            setColor({ ...color, [dataJson.s.toLowerCase()]: "red" });
+                        }
+                        return { ...prevPrize, [dataJson.s]: parseFloat(dataJson.p).toFixed(2) }
+                    }
+                );
+        }
     }, []);
 
     return (
@@ -50,6 +75,7 @@ const Header = () => {
                         <tr>
                             <th scope="col">Symbol</th>
                             <th scope="col">Price</th>
+                            <th scope="col">Graph</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,6 +87,7 @@ const Header = () => {
                                         <tr key={index}>
                                             <td>{key}</td>
                                             <td className={color[key.toLowerCase()]}>{price[key]}</td>
+                                            <td style={{ textAlign: "center" }}><Chart rs={price[key]} title={key} /></td>
                                         </tr>
                                     </>
 
