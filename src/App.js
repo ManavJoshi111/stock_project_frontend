@@ -12,9 +12,9 @@ import Header from "./components/Header";
 import Login from './components/Login';
 import Signup from "./components/Signup";
 import Navbar from "./components/Navbar";
-import Profile from "./components/Profile";
+import Dashboard from "./components/Dashboard";
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({name:null,email:null,contact:null});
   return (
     <>
       <Router>
@@ -22,9 +22,17 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Header />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/profile" element={<Profile />} />
+           {
+            user.email==null 
+              ?
+              <>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              </>:
+              <Route path="/logout" element={""} />
+           }
+            
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </UserContext.Provider>
       </Router>
