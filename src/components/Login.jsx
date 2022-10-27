@@ -29,7 +29,7 @@ const Login = () => {
     });
     const content = await response.json();
     console.log("Response : ", content);
-    if (content.success == "true") {
+    if (content.success === "true") {
       toast.success("Login Successfull", {
         position: "top-center",
         autoClose: 1000,
