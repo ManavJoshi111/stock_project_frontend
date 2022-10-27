@@ -6,9 +6,12 @@ import { toast } from "react-toastify";
 import "../CSS/login_and_signup.css";
 
 const Login = () => {
+
   const navigate = useNavigate();
+  
   const [data, setData] = useState();
   const { user, setUser } = useContext(UserContext);
+  
   console.log("User is : ", user);
   const handleOnChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -37,7 +40,7 @@ const Login = () => {
       console.log("Name : ", content.user.name);
       setUser(() => { return { name: content.user.name, email: content.user.email, contact: content.user.contact } });
       console.log("User is : ", user);
-      navigate("../");
+      navigate("/dashboard");
     } else {
       console.log("Login Unsuccesful");
       toast.error(content.error, {

@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import "../styles/profile.css";
 import UserContext from '../Context/UserContext';
-import userEvent from '@testing-library/user-event';
 
 const Profile = () => {
     const { user, setUser } = useContext(UserContext);
