@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -13,8 +13,30 @@ import Login from './components/Login';
 import Signup from "./components/Signup";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
+import Logout from "./components/Logout";
+
 function App() {
-  const [user, setUser] = useState({name:null,email:null,contact:null});
+  const [user, setUser] = useState({ name: null, email: null, contact: null });
+  const isLoggedIn = async () => {
+    const response = await fetch("http://localhost:8000/api/v1/isLoggedIn", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include"
+    });
+    const content = await response.json();
+    if (content.success == "true") {
+      console.log("Content : ", content);
+      console.log("User : ", content.user);
+      setUser(content.user);
+    } else {
+      setUser({});
+    }
+  }
+  useEffect(() => {
+    isLoggedIn();
+  }, []);
   return (
     <>
       <Router>
@@ -22,16 +44,9 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Header />} />
-           {
-            user.email==null 
-              ?
-              <>
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              </>:
-              <Route path="/logout" element={""} />
-           }
-            
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/logout" element={<Logout />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </UserContext.Provider>

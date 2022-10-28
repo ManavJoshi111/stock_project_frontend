@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import UserContext from '../Context/UserContext';
 import { NavLink } from 'react-router-dom';
 const Navbar = () => {
@@ -19,25 +19,23 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="#">About Us</NavLink>
                             </li>
-                            
-                        {user.email!=null ? 
-                        <><li className="nav-item">
-                            <NavLink className="nav-link active" aria-current="page" to="#">Logout</NavLink>
-                        </li>
-                         </>:<>
-                            <li className="nav-item">
-                            <NavLink className="nav-link active" aria-current="page" to="/login">Login</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link active" aria-current="page" to="/signup">Sign Up</NavLink>
-                        </li>
-                        </>
-                        }
-                        
 
-                            <li className="nav-item">
-                                <NavLink className="nav-link active" aria-current="page" to="/dashboard">Dashboard</NavLink>
-                            </li>
+                            {user && user.email != null ?
+                                <><li className="nav-item">
+                                    <NavLink className="nav-link active" aria-current="page" to="/logout">Logout</NavLink>
+                                </li>
+                                </> : <>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link active" aria-current="page" to="/login">Login</NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link active" aria-current="page" to="/signup">Sign Up</NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link active" aria-current="page" to="/dashboard">Dashboard</NavLink>
+                                    </li>
+                                </>
+                            }
                         </ul>
                     </div>
                 </div>
