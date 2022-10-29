@@ -21,18 +21,20 @@ const Navbar = () => {
                             </li>
 
                             {user && user.email != null ?
-                                <><li className="nav-item">
-                                    <NavLink className="nav-link active" aria-current="page" to="/logout">Logout</NavLink>
-                                </li>
-                                </> : <>
+                                <>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link active" aria-current="page" to="/logout">Logout</NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link active" aria-current="page" to="/dashboard">Dashboard</NavLink>
+                                    </li>
+                                </> :
+                                <>
                                     <li className="nav-item">
                                         <NavLink className="nav-link active" aria-current="page" to="/login">Login</NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink className="nav-link active" aria-current="page" to="/signup">Sign Up</NavLink>
-                                    </li>
-                                    <li className="nav-item">
-                                        <NavLink className="nav-link active" aria-current="page" to="/dashboard">Dashboard</NavLink>
                                     </li>
                                 </>
                             }

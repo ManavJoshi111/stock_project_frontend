@@ -37,7 +37,9 @@ const Header = () => {
                             else if (dataJson.p < prevPrize[dataJson.s]) {
                                 setColor({ ...color, [dataJson.s.toLowerCase()]: "red" });
                             }
-                            return { ...prevPrize, [dataJson.s]: parseFloat(dataJson.p).toFixed(2) }
+                            return {
+                                ...prevPrize, [dataJson.s]: parseFloat(dataJson.p).toFixed(5)
+                            }
                         }
                     );
             }
@@ -67,7 +69,7 @@ const Header = () => {
                                             <td className='w-25'>{index + 1}</td>
                                             <td className='w-25'>{key}</td>
                                             <td className={color[key.toLowerCase()] + " w-25"}>{price[key]}</td>
-                                            {/* <Chart rs={price[key]} title={key} /> */}
+                                            <Chart rs={price[key]} title={key} />
                                             <td style={{ textAlign: "center" }} className="w-25"></td>
                                         </tr>
                                     </>
