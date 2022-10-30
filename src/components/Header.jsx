@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import "../styles/index.css";
-
 import Chart from './Chart';
+
 const Header = () => {
     const [price, setPrice] = useState({});
+    let [cryptoName, setCryptoName] = useState();
+    let timer = 1;
     const [color, setColor] = useState({
         shibusdt: "black",
         adxbtc: "black",
@@ -24,9 +26,9 @@ const Header = () => {
                 intervalNum: "5"
             }));
         }
-        setTimeout(() => {
-            ws.onmessage = (e) => {
-                const dataJson = JSON.parse(e.data);
+        ws.onmessage = (e) => {
+            const dataJson = JSON.parse(e.data);
+            setTimeout(() => {
                 if (dataJson.s)
                     setPrice(
                         (prevPrize) => {
@@ -37,17 +39,40 @@ const Header = () => {
                             else if (dataJson.p < prevPrize[dataJson.s]) {
                                 setColor({ ...color, [dataJson.s.toLowerCase()]: "red" });
                             }
+                            else
+                                setColor({ ...color, [dataJson.s.toLowerCase()]: "black" });
                             return {
                                 ...prevPrize, [dataJson.s]: parseFloat(dataJson.p).toFixed(5)
                             }
                         }
                     );
-            }
-        }, 2000);
+            }, timer * 500);
+            timer++;
+        }
     }, []);
 
     return (
         <>
+            {/* Bootstrap Modal */}
+            {/* <!-- Modal --> */}
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Chart</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { setCryptoName(""); }}></button>
+                        </div>
+                        <div class="modal-body" id='chart'>
+                            {useMemo(() => { return <Chart cryptoName={cryptoName} /> }, [cryptoName])}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* Modal Ends */}
             <center><h1>Real Time Data</h1></center>
             <div className="continaer">
                 <table className="table">
@@ -65,15 +90,19 @@ const Header = () => {
                             Object.keys(price).map((key, index) => {
                                 return (
                                     <>
-                                        <tr key={index}>
+
+                                        <tr key={index} className="mt-2">
                                             <td className='w-25'>{index + 1}</td>
                                             <td className='w-25'>{key}</td>
                                             <td className={color[key.toLowerCase()] + " w-25"}>{price[key]}</td>
-                                            <Chart rs={price[key]} title={key} />
+                                            <td>
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setCryptoName(key.toLowerCase()) }} >
+                                                    Chart
+                                                </button>
+                                            </td>
                                             <td style={{ textAlign: "center" }} className="w-25"></td>
                                         </tr>
                                     </>
-
                                 )
                             })
                         }

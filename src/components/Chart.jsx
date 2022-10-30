@@ -1,64 +1,65 @@
-import React from 'react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import React, { useState, useEffect } from 'react'
+import { createChart } from 'lightweight-charts';
 
 
-const Chart = ( props) => {
-    const options = {
-        indexAxis: 'y',
-        elements: {
-          bar: {
-            borderWidth: 2,
+const Chart = (props) => {
+  console.log("Props : ", `${props.cryptoName}@kline_1s`);
+  useEffect(() => {
+    console.log("in useeffect");
+    if (props.cryptoName) {
+      const ch = createChart(document.getElementById('chart'), {
+        width: 400, height: 300, layout: {
+          backgroundColor: '#000000',
+          textColor: 'rgba(255, 255, 255, 0.9)',
+        },
+        grid: {
+          vertLines: {
+            color: 'rgba(20, 203, 206, 0.5)',
+          },
+          horzLines: {
+            color: 'rgba(20, 203, 206, 0.5)',
           },
         },
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'right',
-          },
-          title: {
-            display: true,
-            text: props.title,
-          },
+        // crosshair: {
+        //   mode: LightweightCharts.CrosshairMode.Normal,
+        // },
+        priceScale: {
+          borderColor: 'rgba(2p, 203, 206, 0.8)',
         },
-      };
-      const la="g"
-      const data = {
-        labels: la,
-        datasets: [{
-          label: 'Rs',
-          data: [props.rs],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)'
-          ],
-          borderColor: [
-            'rgb(255, 99, 132)'
-          ],
-          borderWidth: 1
-        }]
-      };
-    
+        timeScale: {
+          borderColor: 'rgba(20, 203, 206, 0.8)',
+          timeVisible: true,
+          secondsVisible: false,
+        },
+      });
+      const series = ch.addCandlestickSeries();
+      // series.setData(priceData);
+      const ws = new WebSocket(`wss://stream.binance.com:9443/ws`);
+      ws.onopen = () => {
+        ws.send(JSON.stringify({
+          method: 'SUBSCRIBE',
+          params: [`${props.cryptoName}@kline_1s`],
+          id: 1,
+        }));
+      }
+      ws.onmessage = (e) => {
+        const dataJson = JSON.parse(e.data);
+        console.log("DataJson is : ", dataJson);
+        series.update({
+          time: dataJson.k.t / 1000,
+          open: dataJson.k.o,
+          high: dataJson.k.h,
+          low: dataJson.k.l,
+          close: dataJson.k.c
+        });
+      }
+    }
+  }, [props.cryptoName]);
+
   return (
-    <div style={{height:"156.4px",width:"280.6px",textAlign:"center"}}>
-      <Bar options={options} data={data}/>
-    </div>
+    <div id='chart'></div>
   )
 }
-export default Chart
+
+export default Chart;
+
