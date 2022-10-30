@@ -4,8 +4,15 @@ import { createChart } from 'lightweight-charts';
 
 const Chart = (props) => {
   console.log("Props : ", `${props.cryptoName}@kline_1s`);
+  let ws;
   useEffect(() => {
-    console.log("in useeffect");
+    console.log("in useeffect", !props.cryptoName);
+    console.log("ws is : ", ws);
+    if (!props.cryptoName && ws) {
+      console.log("in if");
+      document.getElementById('chart').innerHTML = "";
+      ws.close();
+    }
     if (props.cryptoName) {
       const ch = createChart(document.getElementById('chart'), {
         width: 400, height: 300, layout: {
@@ -34,7 +41,7 @@ const Chart = (props) => {
       });
       const series = ch.addCandlestickSeries();
       // series.setData(priceData);
-      const ws = new WebSocket(`wss://stream.binance.com:9443/ws`);
+      ws = new WebSocket(`wss://stream.binance.com:9443/ws`);
       ws.onopen = () => {
         ws.send(JSON.stringify({
           method: 'SUBSCRIBE',
@@ -52,6 +59,13 @@ const Chart = (props) => {
           low: dataJson.k.l,
           close: dataJson.k.c
         });
+      }
+    }
+    // Close the connection when the component unmounts
+    return () => {
+      if (ws) {
+        ws.close();
+        document.getElementById('chart').innerHTML = "";
       }
     }
   }, [props.cryptoName]);

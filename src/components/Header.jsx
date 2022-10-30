@@ -6,15 +6,7 @@ const Header = () => {
     const [price, setPrice] = useState({});
     let [cryptoName, setCryptoName] = useState();
     let timer = 1;
-    const [color, setColor] = useState({
-        shibusdt: "black",
-        adxbtc: "black",
-        bnbusd: "black",
-        aptbusd: "black",
-        ethbusd: "black",
-        ethbtc: "black",
-        dfbusd: "black"
-    });
+    const [color, setColor] = useState({});
     useEffect(() => {
         const ws = new WebSocket(`wss://stream.binance.com:9443/ws`);
         ws.onopen = () => {
@@ -59,8 +51,8 @@ const Header = () => {
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Chart</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { setCryptoName(""); }}></button>
+                            <h5 class="modal-title" id="exampleModalLabel">Chart Of {cryptoName}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { console.log("Clicked"); setCryptoName(undefined); }}></button>
                         </div>
                         <div class="modal-body" id='chart'>
                             {useMemo(() => { return <Chart cryptoName={cryptoName} /> }, [cryptoName])}
