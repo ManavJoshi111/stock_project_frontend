@@ -5,9 +5,9 @@ const Navbar = () => {
     const { user, setUser } = useContext(UserContext);
     return (
         <>
-            <nav className="navbar navbar-expand-lg">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="container-fluid">
-                    <NavLink className="navbar-brand" to="/">Navbar</NavLink>
+                    <NavLink className="navbar-brand" to="/">CryptoX</NavLink>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -27,6 +27,9 @@ const Navbar = () => {
                                     </li>
                                     <li className="nav-item">
                                         <NavLink className="nav-link active" aria-current="page" to="/dashboard">Dashboard</NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link active" aria-current="page" to="/liveprice">Live Prices</NavLink>
                                     </li>
                                 </> :
                                 <>

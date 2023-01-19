@@ -19,7 +19,7 @@ const Login = () => {
   };
   const sendData = async () => {
     console.log(data);
-    const response = await fetch("http://localhost:8000/api/v1/login", {
+    const response = await fetch("http://192.168.105.182:8000/api/v1/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +43,7 @@ const Login = () => {
       navigate("/dashboard");
     } else {
       console.log("Login Unsuccesful");
-      toast.error(content.error, {
+      toast.error(content.message, {
         position: "top-center",
         autoClose: 1000,
         closeOnClick: true,

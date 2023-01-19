@@ -14,8 +14,14 @@ import Signup from "./components/Signup";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
 import Logout from "./components/Logout";
+import CoinPage from "./components/CoinPage";
+import LivePrice from "./components/LivePrice";
 
 function App() {
+  // const useStyles = makeStyles(() => {
+
+  // });
+  // const classes = useStyles();
   const [user, setUser] = useState({ name: null, email: null, contact: null });
   const isLoggedIn = async () => {
     const response = await fetch("http://localhost:8000/api/v1/isLoggedIn", {
@@ -48,6 +54,8 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/coin/:id" element={<CoinPage />} />
+            <Route path="/liveprice" element={<LivePrice />} />
           </Routes>
         </UserContext.Provider>
       </Router>
