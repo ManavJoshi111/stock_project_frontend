@@ -68,7 +68,7 @@ const Chart = (props) => {
         document.getElementById('chart').innerHTML = "";
       }
     }
-  }, [props.cryptoName]);
+  });
 
   return (
     <div id='chart'></div>
