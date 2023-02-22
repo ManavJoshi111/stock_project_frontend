@@ -7,7 +7,7 @@ const Logout = () => {
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const logout = async () => {
-        const res = await fetch("http://localhost:8000/api/v1/logout", {
+        const res = await fetch("http://localhost:8000/logout", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

@@ -1,14 +1,15 @@
 import React from 'react'
+import "../CSS/Style.css";
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 const Card = (props) => {
-
     const { item } = props;
-
+    const navigate = useNavigate();
     console.log(item);
     return (
         <>
-            <div className="card" style={{ width: '18rem' }}>
+            <div className="card" style={{ width: '18rem' }} onClick={() => { navigate(`/coin/${item.id}`) }}>
                 <div className="card-body">
                     <div className="d-flex justify-content-start align-items-center mb-2">
                         <img src={item.image} alt={item.name} style={{ height: 50 }} />
@@ -18,9 +19,9 @@ const Card = (props) => {
                         </div>
                     </div>
 
-                    <p>{'$ ' + item.current_price}</p>
+                    <p>{'₹ ' + item.current_price}</p>
                     <p className={item.price_change_percentage_24h > 0 ? "green" : "red"}>{item.price_change_percentage_24h + '%'}</p>
-                    <Link to={`/coin/${item.id}`} className="card-link">View</Link>
+                    {/* <Link to={`/coin/${item.id}`} className="card-link">View</Link> */}
                 </div>
             </div>
         </>

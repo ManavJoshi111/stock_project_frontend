@@ -24,7 +24,7 @@ function App() {
   // const classes = useStyles();
   const [user, setUser] = useState({ name: null, email: null, contact: null });
   const isLoggedIn = async () => {
-    const response = await fetch("http://localhost:8000/api/v1/isLoggedIn", {
+    const response = await fetch("http://localhost:8000/isLoggedIn", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

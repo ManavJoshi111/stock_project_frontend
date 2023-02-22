@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import "../CSS/Style.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
@@ -18,6 +19,17 @@ const Header = () => {
             .then(res => res.json())
             .then(data => { setData(data); console.log("Data is : ", data) });
     }, []);
+    if (!data.length) {
+        return (
+            <div className="container mt-4">
+                <div className="d-flex justify-content-center">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        );
+    }
     return (
         <>
             <div className='container mt-4'>
@@ -31,7 +43,7 @@ const Header = () => {
                     })
                     }
                 </div>
-                <div className="container mt-2 mb-1">
+                <div className="container mt-2 mb-1 fixed-bottom">
                     <Paginator first={first} rows={rows} totalRecords={data.length} onPageChange={(e) => { setFirst(e.first); setRows(e.rows) }} />
                 </div>
             </div>
