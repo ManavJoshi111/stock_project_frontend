@@ -38,7 +38,7 @@ const Header = () => {
                         if (!item.image)
                             console.log("Item : ", item);
                         return (
-                            <Card item={item} />
+                            <Card item={item} key={index} />
                         )
                     })
                     }

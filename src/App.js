@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  NavLink,
+  // NavLink,
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,6 +16,8 @@ import Dashboard from "./components/Dashboard";
 import Logout from "./components/Logout";
 import CoinPage from "./components/CoinPage";
 import LivePrice from "./components/LivePrice";
+import Error from "./components/Error";
+import Test from "./components/Test";
 
 function App() {
   // const useStyles = makeStyles(() => {
@@ -32,7 +34,7 @@ function App() {
       credentials: "include"
     });
     const content = await response.json();
-    if (content.success == "true") {
+    if (content.success === "true") {
       console.log("Content : ", content);
       console.log("User : ", content.user);
       setUser(content.user);
@@ -50,12 +52,14 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Header />} />
+            <Route path="/test" element={<Test />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/coin/:id" element={<CoinPage />} />
             <Route path="/liveprice" element={<LivePrice />} />
+            <Route path="*" element={<Error />} />
           </Routes>
         </UserContext.Provider>
       </Router>
