@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useEffect } from "react";
+import { Button } from 'primereact/button';
 import { IgrFinancialChart } from "igniteui-react-charts";
 import { IgrFinancialChartModule } from "igniteui-react-charts";
 // import { getdata } from './getdata';
@@ -372,27 +373,13 @@ const Test = ({ Symbol }) => {
                     marginTop: 30
                 }}
             >
-                <button className="btn btn-primary" onClick={() => handleClick(0)}>
-                    Live
-                </button>
-                <button className="btn btn-primary" onClick={() => handleClick(1)}>
-                    1D
-                </button>
-                <button className="btn btn-primary" onClick={() => handleClick(2)}>
-                    1W
-                </button>
-                <button className="btn btn-primary" onClick={() => handleClick(3)}>
-                    1M
-                </button>
-                <button className="btn btn-primary" onClick={() => handleClick(4)}>
-                    6M
-                </button>
-                <button className="btn btn-primary" onClick={() => handleClick(5)}>
-                    1 Y
-                </button>
-                <button className="btn btn-info" onClick={() => handleClick(6)}>
-                    {/* {chartType} */}Line
-                </button>
+                <Button label="Live" onClick={() => handleClick(0)} />
+                <Button label="1D" onClick={() => handleClick(1)} />
+                <Button label="1W" onClick={() => handleClick(2)} />
+                <Button label="1M" onClick={() => handleClick(3)} />
+                <Button label="6M" onClick={() => handleClick(4)} />
+                <Button label="1Y" onClick={() => handleClick(5)} />
+                <Button label="Live" onClick={() => handleClick(6)} />
             </div>
         </div>
     );

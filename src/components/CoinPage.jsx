@@ -15,8 +15,8 @@ const CoinPage = props => {
     const Symbol = coinMap.get(`${id}`.toUpperCase());
     return (
         <div>
-            <button onClick={() => navigate(-1)}>Go Back</button>
-            <h1>{id}</h1>
+            {/* <button onClick={() => navigate(-1)}>Go Back</button> */}
+            {/* <h1>{id}</h1> */}
 
             <Container>
                 <Row>

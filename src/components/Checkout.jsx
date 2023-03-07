@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Button, Card } from "react-bootstrap";
+import { Card as PCard } from 'primereact/card';
+import { Button } from "primereact/button";
+import { Card } from "react-bootstrap";
 
 const Checkout = ({ Symbol }) => {
     console.log(Symbol);
@@ -33,10 +35,22 @@ const Checkout = ({ Symbol }) => {
             // console.log(new Date().getSeconds())
         };
     }, []);
+    const footer = (
+        <span>
+            <Button label="Save" icon="pi pi-check" />
+            <Button label="Cancel" icon="pi pi-times" className="p-button-secondary" />
+        </span>
+    );
 
     return (
         <div>
-            <Card style={{ width: "18rem" }}>
+            <PCard title={Symbol} className="md:w-25rem">
+                {/* <label htmlFor="quantity">Quantity : </label> */}
+                <Button label="Buy" icon="pi pi-arrow-left" />
+                &nbsp; &nbsp;
+                <Button label="Sell" icon="pi pi-arrow-right" />
+            </PCard>
+            {/* <Card style={{ width: "18rem" }}>
                 <Card.Body>
                     <Card.Title>
                         {Symbol}
@@ -58,7 +72,7 @@ const Checkout = ({ Symbol }) => {
                     <Button variant="primary">Sell</Button>
                     <Button variant="primary">Buy</Button>
                 </Card.Body>
-            </Card>
+            </Card> */}
         </div>
     );
 };

@@ -1,26 +1,26 @@
 import React from 'react'
 import "../CSS/Style.css";
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 const Card = (props) => {
     const { item } = props;
+    console.log("Item : ", item.price_change_percentage_24h);
     const navigate = useNavigate();
     return (
         <>
-            <div className="card" style={{ width: '18rem' }} onClick={() => { navigate(`/coin/${item.symbol}`) }}>
-                <div className="card-body">
-                    <div className="d-flex justify-content-start align-items-center mb-2">
-                        <img src={item.image} alt={item.name} style={{ height: 50 }} />
-                        <div className="details" style={{ margin: '6px 2px 2px 10px' }}>
-                            <h5 className="card-title" >{item.name}</h5>
-                            <h6 className="card-subtitle mb-2 text-muted">{item.symbol}</h6>
+            <div class="card w-72 border border-black p-2" onClick={() => { navigate(`/coin/${item.symbol}`) }}>
+                <div class="card-body">
+                    <div class="flex justify-start items-center mb-2">
+                        <img src={item.image} alt={item.name} class="h-12" />
+                        <div class="details ml-2">
+                            <h5 class="card-title">{item.name}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{item.symbol}</h6>
                         </div>
                     </div>
 
-                    <p>{'₹ ' + item.current_price}</p>
-                    <p className={item.price_change_percentage_24h > 0 ? "green" : "red"}>{item.price_change_percentage_24h + '%'}</p>
-                    {/* <Link to={`/coin/${item.id}`} className="card-link">View</Link> */}
+                    <p class="text-lg font-medium">{'₹ ' + item.current_price.toLocaleString("en-US")}</p>
+                    <p class={"text-lg " + (item.price_change_percentage_24h > 0 ? "text-green-600" : "text-red-600")}>
+                        {item.price_change_percentage_24h}</p>
                 </div>
             </div>
         </>

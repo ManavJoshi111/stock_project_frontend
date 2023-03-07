@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo, } from 'react';
-import Chart from "./Chart";
 
 const LivePrice = () => {
     const [price, setPrice] = useState({});
@@ -54,7 +53,7 @@ const LivePrice = () => {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { console.log("Clicked"); setCryptoName(undefined); }}></button>
                         </div>
                         <div class="modal-body" id='chart'>
-                            {useMemo(() => { return <Chart cryptoName={cryptoName} /> }, [cryptoName])}
+                            {/* {useMemo(() => { return <Chart cryptoName={cryptoName} /> }, [cryptoName])} */}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

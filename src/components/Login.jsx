@@ -2,8 +2,6 @@ import React from "react";
 import { useState, useContext } from "react";
 import UserContext from "../Context/UserContext";
 import { NavLink, useNavigate } from "react-router-dom";
-import { InputText } from 'primereact/inputtext';
-import { Button } from 'primereact/button';
 import { toast } from "react-toastify";
 import "../CSS/login_and_signup.css";
 
@@ -73,15 +71,15 @@ const Login = () => {
             {/* Add login with google button */}
             <a className="mt-3 mb-2 g-signin2" onClick={() => { window.open('http://localhost:8000/auth/google', '_self') }} ><span class="g-icon"></span>Login from Google</a>
             <span className="p-float-label mt-4">
-              <InputText id="email" onChange={(e) => handleOnChange(e)} name="email" />
+              <input id="email" onChange={(e) => handleOnChange(e)} name="email" />
               <label htmlFor="email">Email</label>
             </span>
             <span className="p-float-label mt-4">
-              <InputText id="password" onChange={(e) => handleOnChange(e)} name="password" />
+              <input id="password" onChange={(e) => handleOnChange(e)} name="password" />
               <label htmlFor="password">Password</label>
             </span>
-            <NavLink to="/signup" className="mt-4">Don't have an account?<Button label="Click Here" link style={{ padding: "0", paddingLeft: "5px" }} /></NavLink>
-            <Button className="mt-2 mb-2" label="Submit" onClick={sendData} />
+            <NavLink to="/signup" className="mt-4">Don't have an account?<input label="Click Here" style={{ padding: "0", paddingLeft: "5px" }} /></NavLink>
+            <input className="mt-2 mb-2" label="Submit" onClick={sendData} />
           </div>
         </>
       );
