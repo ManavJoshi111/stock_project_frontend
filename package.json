@@ -10,6 +10,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "chart.js": "^3.9.1",
+    "igniteui-react-charts": "^18.1.2",
     "lightweight-charts": "^3.8.0",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",

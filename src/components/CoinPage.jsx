@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
-import Chart from "./Chart";
-=======
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
@@ -12,7 +7,6 @@ import Test from "./Test";
 
 const CoinPage = props => {
     // console.log("Props are : ", props.match);
->>>>>>> cc7502dd5b45ebbf6565fa1fd344d4aed2f0564e
 
     const navigate = useNavigate();
     const { id } = useParams();
@@ -23,10 +17,6 @@ const CoinPage = props => {
         <div>
             <button onClick={() => navigate(-1)}>Go Back</button>
             <h1>{id}</h1>
-<<<<<<< HEAD
-            <button onClick={() => { navigate('/') }}>Go Back</button>
-            <Chart cryptoName={id} />
-=======
 
             <Container>
                 <Row>
@@ -38,8 +28,7 @@ const CoinPage = props => {
                     </Col>
                 </Row>
             </Container>
->>>>>>> cc7502dd5b45ebbf6565fa1fd344d4aed2f0564e
-        </div>
+        </div >
     );
 };
 

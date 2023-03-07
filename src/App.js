@@ -34,12 +34,7 @@ function App() {
       credentials: "include"
     });
     const content = await response.json();
-<<<<<<< HEAD
-    console.log("In app.js : ", content);
-    if (content.success == "true") {
-=======
     if (content.success === "true") {
->>>>>>> cc7502dd5b45ebbf6565fa1fd344d4aed2f0564e
       console.log("Content : ", content);
       console.log("User : ", content.user);
       setUser(content.user);
