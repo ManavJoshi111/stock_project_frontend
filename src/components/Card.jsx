@@ -6,7 +6,10 @@ import { Link } from 'react-router-dom';
 const Card = (props) => {
     const { item } = props;
     const navigate = useNavigate();
+<<<<<<< HEAD
     // console.log(item);
+=======
+>>>>>>> cc7502dd5b45ebbf6565fa1fd344d4aed2f0564e
     return (
         <>
             <div className="card" style={{ width: '18rem' }} onClick={() => { navigate(`/coin/${item.symbol}`) }}>
