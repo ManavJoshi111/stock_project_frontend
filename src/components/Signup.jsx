@@ -88,6 +88,7 @@ const Signup = () => {
       <>
         <div className="container-fluid mt-5 w-25 d-flex flex-column justify-content-center align-items-center border border-primary">
           <h1 className="display-6 fw-bold">Sign Up</h1>
+          <a className="mt-3 mb-2 g-signin2" onClick={() => { window.open('http://localhost:8000/auth/google', '_self') }} ><span class="g-icon"></span>Signup from Google</a>
           <span className="p-float-label mt-4">
             <InputText id="name" name="name" onChange={(e) => handleOnChange(e)} />
             <label htmlFor="name">Name</label>

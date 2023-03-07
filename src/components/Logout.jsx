@@ -15,6 +15,7 @@ const Logout = () => {
             credentials: "include"
         });
         const content = await res.json();
+        console.log("Conetennt in logout : ", content);
         if (content.success === "true") {
             toast.success("Logout Successfull", {
                 position: "top-center",

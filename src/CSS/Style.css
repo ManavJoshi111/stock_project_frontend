@@ -1,7 +1,48 @@
-.card{
+.card {
     transition: 0.2s;
 }
-.card:hover{
-    box-shadow: 0 0 11px rgba(33,33,33,.2); 
+
+.card:hover {
+    box-shadow: 0 0 11px rgba(33, 33, 33, .2);
     cursor: pointer;
+}
+
+/* Style the Google Sign-In button */
+.g-signin2 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+    color: #757575;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+/* Style the Google icon */
+.g-icon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    background-image: url("../assets/google_logo.png");
+    background-size: cover;
+}
+
+/* Hover effect for the Google Sign-In button */
+.g-signin2:hover {
+    background-color: #f7f7f7;
+}
+
+/* Disable selection on the Google Sign-In button */
+.g-signin2::selection {
+    background-color: transparent;
 }

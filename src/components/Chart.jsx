@@ -41,13 +41,10 @@ const Chart = (props) => {
       });
       const series = ch.addCandlestickSeries();
       // series.setData(priceData);
-      ws = new WebSocket(`wss://stream.binance.com:9443/ws`);
+      // ws = new WebSocket(`wss://stream.binance.com:9443/${props.cryptoName}@kline_1000`);
+      ws = new WebSocket(`wss://stream.binance.com:9443/ws/bnbbtc@kline_1m`);
       ws.onopen = () => {
-        ws.send(JSON.stringify({
-          method: 'SUBSCRIBE',
-          params: [`${props.cryptoName}@kline_1s`],
-          id: 1,
-        }));
+        console.log("in onopen");
       }
       ws.onmessage = (e) => {
         const dataJson = JSON.parse(e.data);

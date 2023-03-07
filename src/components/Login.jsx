@@ -14,13 +14,13 @@ const Login = () => {
   const [data, setData] = useState();
   const { user, setUser } = useContext(UserContext);
 
-  console.log("User is : ", user);
   const handleOnChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
 
   };
+
   const sendData = async () => {
-    console.log(data);
+    console.log("Data is : ", data);
     const response = await fetch(`${process.env.REACT_APP_HOST}/login`, {
       method: "POST",
       headers: {
@@ -67,14 +67,17 @@ const Login = () => {
     else {
       return (
         <>
+          {/* Add login with google button */}
           <div className="container-fluid mt-5 w-25 d-flex flex-column justify-content-center align-items-center border border-primary">
             <h1 className="display-6 fw-bold">Login</h1>
+            {/* Add login with google button */}
+            <a className="mt-3 mb-2 g-signin2" onClick={() => { window.open('http://localhost:8000/auth/google', '_self') }} ><span class="g-icon"></span>Login from Google</a>
             <span className="p-float-label mt-4">
-              <InputText id="email" onChange={(e) => handleOnChange(e)} />
+              <InputText id="email" onChange={(e) => handleOnChange(e)} name="email" />
               <label htmlFor="email">Email</label>
             </span>
             <span className="p-float-label mt-4">
-              <InputText id="password" onChange={(e) => handleOnChange(e)} />
+              <InputText id="password" onChange={(e) => handleOnChange(e)} name="password" />
               <label htmlFor="password">Password</label>
             </span>
             <NavLink to="/signup" className="mt-4">Don't have an account?<Button label="Click Here" link style={{ padding: "0", paddingLeft: "5px" }} /></NavLink>

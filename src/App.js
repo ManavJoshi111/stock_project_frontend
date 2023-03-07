@@ -32,6 +32,7 @@ function App() {
       credentials: "include"
     });
     const content = await response.json();
+    console.log("In app.js : ", content);
     if (content.success == "true") {
       console.log("Content : ", content);
       console.log("User : ", content.user);

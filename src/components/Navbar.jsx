@@ -23,13 +23,13 @@ const Navbar = () => {
                             {user && user.email != null ?
                                 <>
                                     <li className="nav-item">
-                                        <NavLink className="nav-link active" aria-current="page" to="/logout">Logout</NavLink>
-                                    </li>
-                                    <li className="nav-item">
                                         <NavLink className="nav-link active" aria-current="page" to="/dashboard">Dashboard</NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink className="nav-link active" aria-current="page" to="/liveprice">Live Prices</NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link active" aria-current="page" to="/logout">Logout</NavLink>
                                     </li>
                                 </> :
                                 <>
