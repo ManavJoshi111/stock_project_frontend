@@ -3,9 +3,7 @@ import { useState, useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
-
 import { toast } from "react-toastify";
-import '../CSS/login_and_signup.css';
 import userContext from '../Context/UserContext';
 
 const Signup = () => {
@@ -39,7 +37,7 @@ const Signup = () => {
         body: JSON.stringify(data)
       });
       const content = await response.json();
-      console.log("COntent IS : ", content);
+      console.log("Content IS : ", content);
       if (!content.error) content.error = "";
       console.log("Response : ", content);
       if (content.success === "true") {
@@ -86,31 +84,86 @@ const Signup = () => {
   else {
     return (
       <>
-        <div className="container-fluid mt-5 w-25 d-flex flex-column justify-content-center align-items-center border border-primary">
-          <h1 className="display-6 fw-bold">Sign Up</h1>
-          <a className="mt-3 mb-2 g-signin2" onClick={() => { window.open('http://localhost:8000/auth/google', '_self') }} ><span class="g-icon"></span>Signup from Google</a>
-          <span className="p-float-label mt-4">
-            <InputText id="name" name="name" onChange={(e) => handleOnChange(e)} />
-            <label htmlFor="name">Name</label>
-          </span>
-          <span className="p-float-label mt-4">
-            <InputText id="email" name="email" onChange={(e) => handleOnChange(e)} />
-            <label htmlFor="email">Email</label>
-          </span>
-          <span className="p-float-label mt-4">
-            <InputText id="contact" name="contact" onChange={(e) => handleOnChange(e)} />
-            <label htmlFor="contact">Contact</label>
-          </span>
-          <span className="p-float-label mt-4">
-            <InputText id="password" name="password" type="password" onChange={(e) => handleOnChange(e)} />
-            <label htmlFor="password">Password</label>
-          </span>
-          <span className="p-float-label mt-4">
-            <InputText id="cpassword" name="cpassword" type="password" onChange={(e) => handleOnChange(e)} />
-            <label htmlFor="cpassword">Confirm Password</label>
-          </span>
-          <NavLink to="/login" className="mt-4">Already have an account?<Button label="Click Here" link style={{ padding: "0", paddingLeft: "5px" }} /></NavLink>
-          <Button className="mt-2 mb-2" label="Submit" onClick={sendData} />
+        <div className="container flex justify-center">
+          < div className="w-full max-w-xs" >
+            <div className="flex flex-col break-words bg-white border border-2 shadow-md mt-20">
+              <div className="text-3xl text-gray-700 uppercase text-center py-3 px-6 mb-0">
+                Sign UP
+              </div>
+              <a className="mt-1 mb-2 g-signin2" onClick={() => { window.open('http://localhost:8000/auth/google', '_self') }} ><span class="g-icon"></span>Sign UP with Google</a>
+
+              <form className="py-6 px-5">
+                <label htmlFor="name" className="block text-gray-700 text-lg font-bold mb-2">
+                  Name:
+                </label>
+                <input
+                  type="name"
+                  name="name"
+                  id="name"
+                  placeholder="Enter your Name"
+                  onChange={handleOnChange}
+                  className="p-3 bg-gray-200 rounded form-input w-full"
+                />
+                <label htmlFor="email" className="block text-gray-700 text-lg font-bold mb-2">
+                  Email:
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Enter your Email"
+                  onChange={handleOnChange}
+                  className="p-3 bg-gray-200 rounded form-input w-full"
+                />
+                <label htmlFor="contact" className="block text-gray-700 text-lg font-bold mb-2">
+                  Contact:
+                </label>
+                <input
+                  type="contact"
+                  name="contact"
+                  id="contact"
+                  placeholder="Enter your Contact"
+                  onChange={handleOnChange}
+                  className="p-3 bg-gray-200 rounded form-input w-full"
+                />
+                <label htmlFor="password" className="block text-gray-700 text-lg font-bold mb-2">
+                  Password:
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Enter your Password"
+                  onChange={handleOnChange}
+                  className="p-3 bg-gray-200 rounded form-input w-full"
+                />
+                <label htmlFor="cpassword" className="block text-gray-700 text-lg font-bold mb-2">
+                  Confirm Password:
+                </label>
+                <input
+
+                  type="password"
+                  name="cpassword"
+                  id="cpassword"
+                  placeholder="Confirm your Password"
+                  onChange={handleOnChange}
+                  className="p-3 bg-gray-200 rounded form-input w-full"
+                />
+                <button
+                  type="button"
+                  className="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-gray-800 shadow-lg focus:outline-none hover:bg-gray-700 hover:shadow-none"
+                  onClick={sendData}
+                >
+                  Sign Up
+                </button>
+                <div className="text-center pt-3">
+                  <NavLink to="/login" className="text-blue-500 hover:text-blue-700 font-semibold">
+                    Already have an account?
+                  </NavLink>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </>
     )

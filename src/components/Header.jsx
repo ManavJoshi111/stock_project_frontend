@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import "../CSS/Style.css";
 import "../styles/index.css";
 import { useNavigate } from 'react-router-dom';
 import Card from './Card'
@@ -24,6 +23,21 @@ const Header = () => {
             .then(res => res.json())
             .then(data => { setData(data); console.log("Data is : ", data) });
     }, []);
+    if (data.length === 0) {
+        return (
+            <>
+                <div className="flex justify-center items-center mt-52  flex-col">
+                    <div className="flex justify-center items-center mb-4">
+                        <div className="mr-3 rounded-full border-4 bg-gray-400 border-gray-400 w-12 h-12 animate-ping"></div>
+                        <div className="mr-3 rounded-full border-4 bg-gray-400 border-gray-400 w-12 h-12 animate-ping"></div>
+                        <div className="mr-3 rounded-full border-4 bg-gray-400 border-gray-400 w-12 h-12 animate-ping"></div>
+                    </div>
+                    <div><h1 className="text-3xl text-gray-800">Loading...</h1></div>
+                </div>
+            </>
+
+        );
+    }
     return (
         <>
             <div className='flex justify-around'>
