@@ -7,13 +7,8 @@ This repo contains frontend for the project CryptoX, which is a Paper trading ME
 To install this project with npm
  - Clone this repository to your local machine
  - Install dependencies using ```npm install```
- - Start the development server using npm start
+ - Start the development server using ```npm start```
  - The frontend will be available at http://localhost:3000.
-
-```bash
-  npm install my-project
-  cd my-project
-```
     
 ## Authors
 
