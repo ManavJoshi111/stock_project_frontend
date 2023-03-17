@@ -50,7 +50,7 @@ const Header = () => {
                             console.log("Item : ", item);
                         return (
                             <>
-                                <div className="mt-3 mx-3">
+                                <div className="mt-3 mx-3 hover:cursor-pointer">
                                     <Card item={item} key={index} />
                                 </div>
                             </>
