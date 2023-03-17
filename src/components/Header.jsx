@@ -50,7 +50,7 @@ const Header = () => {
                             console.log("Item : ", item);
                         return (
                             <>
-                                <div className="mt-3 mx-3 hover:cursor-pointer">
+                                <div className="transition delay-150 mt-3 mx-3 hover:cursor-pointer hover:shadow-xl">
                                     <Card item={item} key={index} />
                                 </div>
                             </>

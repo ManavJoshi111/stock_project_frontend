@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import coinMap from "./coingeko_to_binance_map";
+import coinMap from "../modules/coingeko_to_binance_map";
 import Checkout from "./Checkout";
 import Chart from "./Chart";
 
