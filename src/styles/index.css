@@ -1,11 +1,28 @@
-.green{
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+.green {
     font-weight: bold;
     color: green !important;
 }
-.red{
+
+.red {
     font-weight: bold;
-    color:red !important;
+    color: red !important;
 }
-.black{
-    color:black !important;
+
+.black {
+    color: black !important;
+}
+
+.p-menubar-button {
+    margin-left: auto !important;
 }

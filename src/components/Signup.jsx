@@ -1,8 +1,9 @@
 import React from 'react'
 import { useState, useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button';
 import { toast } from "react-toastify";
-import '../CSS/login_and_signup.css';
 import userContext from '../Context/UserContext';
 
 const Signup = () => {
@@ -13,7 +14,7 @@ const Signup = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   }
   const sendData = async () => {
-    console.log(data);
+    console.log("Data : ", data);
     if (data.password !== data.cpassword) {
       toast.error("Password and Confirm Password should be same", {
         position: "top-center",
@@ -27,7 +28,7 @@ const Signup = () => {
       });
     }
     try {
-      const response = await fetch('http://localhost:8000/api/v1/signup', {
+      const response = await fetch('http://localhost:8000/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -36,7 +37,7 @@ const Signup = () => {
         body: JSON.stringify(data)
       });
       const content = await response.json();
-      console.log("COntent IS : ", content);
+      console.log("Content IS : ", content);
       if (!content.error) content.error = "";
       console.log("Response : ", content);
       if (content.success === "true") {
@@ -83,84 +84,87 @@ const Signup = () => {
   else {
     return (
       <>
-        <section className="background-radial-gradient overflow-hidden">
-          <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
-            <div className="row gx-lg-5 align-items-center mb-5">
-              <div className="col-lg-6 mb-5 mb-lg-0" style={{ zIndex: "10" }}>
-                <h1 className="my-5 display-5 fw-bold ls-tight" style={{ color: "hsl(218, 81%, 95%)" }}>
-                  The best offer <br />
-                  <span style={{ color: "hsl(218, 81%, 75%)" }}>for your business</span>
-                </h1>
-                <p className="mb-4 opacity-70" style={{ color: "hsl(218, 81%, 85%)" }}>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Temporibus, expedita iusto veniam atque, magni tempora mollitia
-                  dolorum consequatur nulla, neque debitis eos reprehenderit quasi
-                  ab ipsum nisi dolorem modi. Quos?
-                </p>
+        <div className="container flex justify-center">
+          < div className="w-full max-w-xs" >
+            <div className="flex flex-col break-words bg-white border border-2 shadow-md mt-20">
+              <div className="text-3xl text-gray-700 uppercase text-center py-3 px-6 mb-0">
+                Sign UP
               </div>
+              <a className="mt-1 mb-2 g-signin2" onClick={() => { window.open('http://localhost:8000/auth/google', '_self') }} ><span class="g-icon"></span>Sign UP with Google</a>
 
-              <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
-                <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong"></div>
-                <div id="radius-shape-2" className="position-absolute shadow-5-strong"></div>
+              <form className="py-6 px-5">
+                <label htmlFor="name" className="block text-gray-700 text-lg font-bold mb-2">
+                  Name:
+                </label>
+                <input
+                  type="name"
+                  name="name"
+                  id="name"
+                  placeholder="Enter your Name"
+                  onChange={handleOnChange}
+                  className="p-3 bg-gray-200 rounded form-input w-full"
+                />
+                <label htmlFor="email" className="block text-gray-700 text-lg font-bold mb-2">
+                  Email:
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Enter your Email"
+                  onChange={handleOnChange}
+                  className="p-3 bg-gray-200 rounded form-input w-full"
+                />
+                <label htmlFor="contact" className="block text-gray-700 text-lg font-bold mb-2">
+                  Contact:
+                </label>
+                <input
+                  type="contact"
+                  name="contact"
+                  id="contact"
+                  placeholder="Enter your Contact"
+                  onChange={handleOnChange}
+                  className="p-3 bg-gray-200 rounded form-input w-full"
+                />
+                <label htmlFor="password" className="block text-gray-700 text-lg font-bold mb-2">
+                  Password:
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Enter your Password"
+                  onChange={handleOnChange}
+                  className="p-3 bg-gray-200 rounded form-input w-full"
+                />
+                <label htmlFor="cpassword" className="block text-gray-700 text-lg font-bold mb-2">
+                  Confirm Password:
+                </label>
+                <input
 
-                <div className="card bg-glass">
-                  <h1 className='m-2 p-2 mb-0 pb-0 mx-4'>Create An Account :</h1>
-                  <div className="card-body px-4 py-5 px-md-5 pt-3">
-                    <div className="row">
-                      <div className="col-md-6 mb-4">
-                        <div className="form-outline">
-                          <input type="text" id="form3Example1" className="form-control" name="name" onChange={handleOnChange} />
-                          <label className="form-label" htmlFor="form3Example1">Full Name</label>
-                        </div>
-                      </div>
-                      <div className="col-md-6 mb-4">
-                        <div className="form-outline">
-                          <input type="text" id="form3Example2" className="form-control" name="contact" onChange={handleOnChange} />
-                          <label className="form-label" htmlFor="form3Example2">Contact Number</label>
-                        </div>
-                      </div>
-                    </div>
-
-
-                    <div className="form-outline mb-4">
-                      <input type="email" id="form3Example3" className="form-control" name="email" onChange={handleOnChange} />
-                      <label className="form-label" htmlFor="form3Example3">Email address</label>
-                    </div>
-
-                    <div className="form-outline mb-4">
-                      <input type="email" id="form3Example3" className="form-control" name="password" onChange={handleOnChange} />
-                      <label className="form-label" htmlFor="form3Example3">Password</label>
-                    </div>
-
-                    <div className="form-outline mb-4">
-                      <input type="password" id="form3Example4" className="form-control" name="cpassword" onChange={handleOnChange} />
-                      <label className="form-label" htmlFor="form3Example4">Confirm Password</label>
-                    </div>
-
-
-                    {/* <div className="form-check d-flex justify-content-center mb-4">
-                  <input className="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
-                  <label className="form-check-label" htmlFor="form2Example33">
-                    Subscribe to our newsletter
-                  </label>
-                </div> */}
-                    Already have an account?&nbsp;
-                    <NavLink to="/login" className="mt-0">
-                      Click Here
-                    </NavLink>
-                    <br />
-                    <br />
-                    <center>
-                      <button type="button" className="btn btn-primary btn-block mb-4" onClick={sendData}>
-                        Sign up
-                      </button>
-                    </center>
-                  </div>
+                  type="password"
+                  name="cpassword"
+                  id="cpassword"
+                  placeholder="Confirm your Password"
+                  onChange={handleOnChange}
+                  className="p-3 bg-gray-200 rounded form-input w-full"
+                />
+                <button
+                  type="button"
+                  className="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-gray-800 shadow-lg focus:outline-none hover:bg-gray-700 hover:shadow-none"
+                  onClick={sendData}
+                >
+                  Sign Up
+                </button>
+                <div className="text-center pt-3">
+                  <NavLink to="/login" className="text-blue-500 hover:text-blue-700 font-semibold">
+                    Already have an account?
+                  </NavLink>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
-        </section>
+        </div>
       </>
     )
   }

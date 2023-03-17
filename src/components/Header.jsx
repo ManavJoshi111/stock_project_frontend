@@ -1,86 +1,83 @@
 import React, { useEffect, useState } from 'react';
 import "../styles/index.css";
+import { useNavigate } from 'react-router-dom';
+import Card from './Card'
 
-import Chart from './Chart';
 const Header = () => {
-    const [price, setPrice] = useState({});
-    const [color, setColor] = useState({
-        shibusdt: "black",
-        adxbtc: "black",
-        bnbusd: "black",
-        aptbusd: "black",
-        ethbusd: "black",
-        ethbtc: "black",
-        dfbusd: "black"
-    });
+    const [data, setData] = useState([]);
+    const [rows, setRows] = useState(9);
+    const [first, setFirst] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const navigate = useNavigate();
+    const pages = Array.from({ length: 10 }, (_, i) => i + 1);
+    const handleClick = (e) => {
+        let page = e.target.value;
+        console.log(page);
+        setCurrentPage(page);
+        setFirst((page - 1) * 9);
+        setRows(page * 9);
+    }
     useEffect(() => {
-        const ws = new WebSocket(`wss://stream.binance.com:9443/ws`);
-        ws.onopen = () => {
-            ws.send(JSON.stringify({
-                method: 'SUBSCRIBE',
-                params: ["btcusdt@trade", "ethusdt@trade", "bnbusdt@trade", "xrpusdt@trade", "busdusdt@trade", "adausdt@trade", "solusdt@trade", "dogeusdt@trade", "maticusdt@trade", "dotusdt@trade", "stethusdt@trade", "shibusdt@trade"],
-                id: 1,
-                interval: "SECONDS",
-                intervalNum: "5"
-            }));
-        }
-        setTimeout(() => {
-            ws.onmessage = (e) => {
-                const dataJson = JSON.parse(e.data);
-                if (dataJson.s)
-                    setPrice(
-                        (prevPrize) => {
-                            // dataJson.p and prevPrize[dataJson.s] to be compared
-                            if (dataJson.p > prevPrize[dataJson.s]) {
-                                setColor({ ...color, [dataJson.s.toLowerCase()]: "green" });
-                            }
-                            else if (dataJson.p < prevPrize[dataJson.s]) {
-                                setColor({ ...color, [dataJson.s.toLowerCase()]: "red" });
-                            }
-                            return {
-                                ...prevPrize, [dataJson.s]: parseFloat(dataJson.p).toFixed(5)
-                            }
-                        }
-                    );
-            }
-        }, 2000);
+        // Fetch data from coingecko api and store it in state
+        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=100&page=1&sparkline=false')
+            .then(res => res.json())
+            .then(data => { setData(data); console.log("Data is : ", data) });
     }, []);
+    if (data.length === 0) {
+        // Loading State Strts
+        return (
+            <>
+                <div className="flex justify-center items-center mt-52  flex-col">
+                    <div className="flex justify-center items-center mb-4">
+                        <div className="mr-3 rounded-full border-4 bg-gray-400 border-gray-400 w-12 h-12 animate-ping"></div>
+                        <div className="mr-3 rounded-full border-4 bg-gray-400 border-gray-400 w-12 h-12 animate-ping"></div>
+                        <div className="mr-3 rounded-full border-4 bg-gray-400 border-gray-400 w-12 h-12 animate-ping"></div>
+                    </div>
+                    <div><h1 className="text-3xl text-gray-800">Loading...</h1></div>
+                </div>
+            </>
 
+        );
+        // Loadin state ends
+    }
     return (
         <>
-            <center><h1>Real Time Data</h1></center>
-            <div className="continaer">
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Sr No.</th>
-                            <th scope="col">Symbol</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Graph</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {price &&
-
-                            Object.keys(price).map((key, index) => {
-                                return (
-                                    <>
-                                        <tr key={index}>
-                                            <td className='w-25'>{index + 1}</td>
-                                            <td className='w-25'>{key}</td>
-                                            <td className={color[key.toLowerCase()] + " w-25"}>{price[key]}</td>
-                                            <Chart rs={price[key]} title={key} />
-                                            <td style={{ textAlign: "center" }} className="w-25"></td>
-                                        </tr>
-                                    </>
-
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
+            <div className='flex justify-center'>
+                {/* <div className="content flex flex-wrap justify-around" style={{ gap: '20px 20px' }}> */}
+                <div className="grid grid-cols-3 gap-6 mt-3" style={{ gap: '20px 20px' }}>
+                    {data.slice(first, rows).map((item, index) => {
+                        if (!item.image)
+                            console.log("Item : ", item);
+                        return (
+                            <>
+                                <div className="transition delay-150 mt-3 mx-3 hover:cursor-pointer hover:shadow-xl">
+                                    <Card item={item} key={index} />
+                                </div>
+                            </>
+                        )
+                    })
+                    }
+                </div>
+            </div>
+            <div className="flex justify-center mt-8">
+                <nav>
+                    <ul className="flex">
+                        {pages.map((page) => (
+                            <li
+                                value={page}
+                                className={`${currentPage === page
+                                    ? "bg-gray-800 text-white"
+                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300 shadow-lg"
+                                    } px-3 py-2 cursor-pointer rounded-full mr-2`}
+                                onClick={(e) => { handleClick(e) }}
+                            >
+                                {page}
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
             </div>
         </>
-    );
+    )
 }
 export default Header;

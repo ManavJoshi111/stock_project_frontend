@@ -7,7 +7,7 @@ const Logout = () => {
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const logout = async () => {
-        const res = await fetch("http://localhost:8000/api/v1/logout", {
+        const res = await fetch("http://localhost:8000/logout", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -15,8 +15,9 @@ const Logout = () => {
             credentials: "include"
         });
         const content = await res.json();
+        console.log("Content in logout : ", content);
         if (content.success === "true") {
-            toast.success("Logout Successfull", {
+            toast.success("Logout Successful", {
                 position: "top-center",
                 autoClose: 1000,
                 closeOnClick: true,
@@ -51,7 +52,7 @@ const Logout = () => {
     else {
         return (
             <center>
-                <h1>Loggin You Out...</h1>
+                <h1>Logging You Out...</h1>
             </center>
         )
     }
