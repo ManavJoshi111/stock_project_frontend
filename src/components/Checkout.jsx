@@ -2,10 +2,9 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 
 const Checkout = ({ Symbol }) => {
-    console.log(Symbol);
 
     const [price, setPrice] = useState(0);
-    const [qty, setQty] = useState(0);
+    const [qty, setQty] = useState("");
 
     const handleChange = e => {
         setQty(e.target.value);
@@ -13,7 +12,7 @@ const Checkout = ({ Symbol }) => {
 
     useEffect(() => {
         const ws = new WebSocket(
-            `wss://stream.binance.com:9443/ws/${Symbol.toLowerCase()}@kline_1m`
+            `wss://stream.binance.com:9443/ws/${Symbol.toLowerCase()}@kline_1s`
         );
         ws.onmessage = e => {
             const dataJson = JSON.parse(e.data);
@@ -28,22 +27,13 @@ const Checkout = ({ Symbol }) => {
             };
 
             setPrice(data.open);
-
-            // console.log(new Date().getSeconds())
         };
     }, []);
 
-    const footer = (
-        <span>
-            {/* <Button label="Save" icon="pi pi-check" /> */}
-            {/* <Button label="Cancel" icon="pi pi-times" className="p-button-secondary" /> */}
-        </span>
-    );
-
     return (
-        <div>
-            <div className="bg-white rounded-lg shadow-lg p-4" style={{ width: "18rem" }}>
-                <div className="font-bold text-lg">{Symbol}</div>
+        <>
+            {/* <div className="bg-white rounded-lg shadow-lg p-4" style={{ width: "18rem" }}> */}
+            {/* <div className="font-bold text-lg">{Symbol}</div>
                 <div className="text-gray-700 text-base">
                     Some quick example text to build on the card title and make up the bulk of the card's content.
                 </div>
@@ -75,33 +65,28 @@ const Checkout = ({ Symbol }) => {
                     type="button"
                 >
                     Buy
-                </button>
+                </button> */}
+            <div className="flex flex-col justify-around bg-white rounded-lg shadow-lg p-6 h-full">
+                <div className="flex flex-col">
+                    <h2 className="text-xl font-bold mb-4">{Symbol}</h2>
+                    <div className="flex justify-between items-center mb-4">
+                        <label className="text-gray-600 font-medium">Price:</label>
+                        <input type="text" className="text-gray-700 font-medium w-1/2 text-right" value={price} readOnly style={{ outline: "unset" }} />
+                    </div>
+                    <div className="flex justify-between items-center">
+                        <label className="text-gray-600 font-medium">Quantity:</label>
+                        <input type="number" onChange={handleChange} className="text-gray-700 font-medium w-1/2 text-right border border-gray-400 py-2 px-3 rounded-lg" value={qty} />
+                    </div>
+                </div>
+                <div className="flex justify-between mt-6">
+                    <button className="bg-red-500 text-white font-medium py-2 px-4 rounded-lg">Sell</button>
+                    <button className="bg-green-500 text-white font-medium py-2 px-4 rounded-lg mr-2">Buy</button>
+                </div>
             </div>
 
-            {/* <Card style={{ width: "18rem" }}>
-                <Card.Body>
-                    <Card.Title>
-                        {Symbol}
-                    </Card.Title>
-                    <Card.Text>
-                        Some quick example text to build on the card title and make up the
-                        bulk of the card's content.
-                    </Card.Text>
-                    <label htmlFor="quantity">Quantity : </label>
-                    <input
-                        type="number"
-                        id="quantity"
-                        placeholder="Enter quantity"
-                        onChange={handleChange}
-                        value={qty}
-                    />
-                    <label htmlFor="quantity">Price : </label>
-                    <input type="text" id="price" readOnly value={price} />
-                    <Button variant="primary">Sell</Button>
-                    <Button variant="primary">Buy</Button>
-                </Card.Body>
-            </Card> */}
-        </div>
+            {/* </div> */}
+
+        </>
     );
 };
 

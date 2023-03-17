@@ -10,9 +10,9 @@ const Header = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
     const pages = Array.from({ length: 10 }, (_, i) => i + 1);
+    
     const handleClick = (e) => {
         let page = e.target.value;
-        console.log(page);
         setCurrentPage(page);
         setFirst((page - 1) * 9);
         setRows(page * 9);
@@ -21,7 +21,7 @@ const Header = () => {
         // Fetch data from coingecko api and store it in state
         fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=100&page=1&sparkline=false')
             .then(res => res.json())
-            .then(data => { setData(data); console.log("Data is : ", data) });
+            .then(data => setData(data));
     }, []);
     if (data.length === 0) {
         // Loading State Strts
@@ -62,9 +62,10 @@ const Header = () => {
             <div className="flex justify-center mt-8">
                 <nav>
                     <ul className="flex">
-                        {pages.map((page) => (
+                        {pages.map((page, index) => (
                             <li
                                 value={page}
+                                key={index}
                                 className={`${currentPage === page
                                     ? "bg-gray-800 text-white"
                                     : "bg-gray-200 text-gray-700 hover:bg-gray-300 shadow-lg"
