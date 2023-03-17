@@ -24,6 +24,7 @@ const Header = () => {
             .then(data => { setData(data); console.log("Data is : ", data) });
     }, []);
     if (data.length === 0) {
+        // Loading State Strts
         return (
             <>
                 <div className="flex justify-center items-center mt-52  flex-col">
@@ -37,10 +38,11 @@ const Header = () => {
             </>
 
         );
+        // Loadin state ends
     }
     return (
         <>
-            <div className='flex justify-around'>
+            <div className='flex justify-center'>
                 {/* <div className="content flex flex-wrap justify-around" style={{ gap: '20px 20px' }}> */}
                 <div className="grid grid-cols-3 gap-6 mt-3" style={{ gap: '20px 20px' }}>
                     {data.slice(first, rows).map((item, index) => {
@@ -48,32 +50,32 @@ const Header = () => {
                             console.log("Item : ", item);
                         return (
                             <>
-                                <Card item={item} key={index} />
+                                <div className="mt-3 mx-3">
+                                    <Card item={item} key={index} />
+                                </div>
                             </>
                         )
                     })
                     }
                 </div>
             </div>
-            <div className="container mt-3 mb-1">
-                <div className="flex justify-center">
-                    <nav>
-                        <ul className="flex">
-                            {pages.map((page) => (
-                                <li
-                                    value={page}
-                                    className={`${currentPage === page
-                                        ? "bg-gray-800 text-white"
-                                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                                        } px-3 py-2 cursor-pointer rounded-full mr-2`}
-                                    onClick={(e) => { handleClick(e) }}
-                                >
-                                    {page}
-                                </li>
-                            ))}
-                        </ul>
-                    </nav>
-                </div>
+            <div className="flex justify-center mt-8">
+                <nav>
+                    <ul className="flex">
+                        {pages.map((page) => (
+                            <li
+                                value={page}
+                                className={`${currentPage === page
+                                    ? "bg-gray-800 text-white"
+                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300 shadow-lg"
+                                    } px-3 py-2 cursor-pointer rounded-full mr-2`}
+                                onClick={(e) => { handleClick(e) }}
+                            >
+                                {page}
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
             </div>
         </>
     )

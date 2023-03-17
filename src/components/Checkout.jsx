@@ -1,8 +1,5 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Card as PCard } from 'primereact/card';
-import { Button } from "primereact/button";
-import { Card } from "react-bootstrap";
 
 const Checkout = ({ Symbol }) => {
     console.log(Symbol);
@@ -37,19 +34,49 @@ const Checkout = ({ Symbol }) => {
     }, []);
     const footer = (
         <span>
-            <Button label="Save" icon="pi pi-check" />
-            <Button label="Cancel" icon="pi pi-times" className="p-button-secondary" />
+            {/* <Button label="Save" icon="pi pi-check" /> */}
+            {/* <Button label="Cancel" icon="pi pi-times" className="p-button-secondary" /> */}
         </span>
     );
 
     return (
         <div>
-            <PCard title={Symbol} className="md:w-25rem">
-                {/* <label htmlFor="quantity">Quantity : </label> */}
-                <Button label="Buy" icon="pi pi-arrow-left" />
-                &nbsp; &nbsp;
-                <Button label="Sell" icon="pi pi-arrow-right" />
-            </PCard>
+            <div className="bg-white rounded-lg shadow-lg p-4" style={{ width: "18rem" }}>
+                <div className="font-bold text-lg">{Symbol}</div>
+                <div className="text-gray-700 text-base">
+                    Some quick example text to build on the card title and make up the bulk of the card's content.
+                </div>
+                <label className="text-gray-700 font-bold" for="quantity">Quantity : </label>
+                <input
+                    className="border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type="number"
+                    id="quantity"
+                    placeholder="Enter quantity"
+                    onchange="handleChange"
+                    value={qty}
+                />
+                <label className="text-gray-700 font-bold" for="price">Price : </label>
+                <input
+                    className="border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type="text"
+                    id="price"
+                    readonly
+                    value={price}
+                />
+                <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    type="button"
+                >
+                    Sell
+                </button>
+                <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    type="button"
+                >
+                    Buy
+                </button>
+            </div>
+
             {/* <Card style={{ width: "18rem" }}>
                 <Card.Body>
                     <Card.Title>

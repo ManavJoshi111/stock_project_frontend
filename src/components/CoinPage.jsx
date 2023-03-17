@@ -19,7 +19,7 @@ const CoinPage = props => {
                     <Test Symbol={Symbol} />
                 </div>
                 <div className="col-span-4 md:col-span-3">
-                    {/* <Checkout Symbol={Symbol} /> */}
+                    <Checkout Symbol={Symbol} />
                 </div>
             </div>
 
