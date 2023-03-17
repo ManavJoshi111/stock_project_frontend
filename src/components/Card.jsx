@@ -8,7 +8,7 @@ const Card = (props) => {
     const navigate = useNavigate();
     return (
         <>
-            <div class="card w-72 border border-black p-2" onClick={() => { navigate(`/coin/${item.symbol}`) }}>
+            <div class="card w-80 border border-black p-2" onClick={() => { navigate(`/coin/${item.symbol}`) }}>
                 <div class="card-body">
                     <div class="flex justify-start items-center mb-2">
                         <img src={item.image} alt={item.name} class="h-12" />
@@ -18,9 +18,9 @@ const Card = (props) => {
                         </div>
                     </div>
 
-                    <p class="text-lg font-medium">{'₹ ' + item.current_price.toLocaleString("en-US")}</p>
+                    <p class="text-lg font-medium">{'$ ' + item.current_price.toLocaleString("en-US")}</p>
                     <p class={"text-lg " + (item.price_change_percentage_24h > 0 ? "text-green-600" : "text-red-600")}>
-                        {item.price_change_percentage_24h}</p>
+                        {item.price_change_percentage_24h} %</p>
                 </div>
             </div>
         </>
