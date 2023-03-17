@@ -5,24 +5,9 @@ import { IgrFinancialChartModule } from "igniteui-react-charts";
 // import { getdata } from './getdata';
 IgrFinancialChartModule.register();
 
-const Test = ({ Symbol }) => {
+const Chart = ({ Symbol }) => {
     console.log("coinpage : ", Symbol);
     const chartRef = useRef(0);
-
-    // const [chartType, setChartType] = useState("Candle");
-
-    // const today = new Date();
-    // const endOfDay = new Date(
-    //     today.getFullYear(),
-    //     today.getMonth(),
-    //     today.getDate() + 1
-    // ).getTime();
-
-    // const todayMidnight = new Date(
-    //     today.getFullYear(),
-    //     today.getMonth(),
-    //     today.getDate()
-    // );
 
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -384,4 +369,4 @@ const Test = ({ Symbol }) => {
     );
 };
 
-export default Test;
+export default Chart;

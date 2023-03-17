@@ -15,9 +15,9 @@ const Logout = () => {
             credentials: "include"
         });
         const content = await res.json();
-        console.log("Conetennt in logout : ", content);
+        console.log("Content in logout : ", content);
         if (content.success === "true") {
-            toast.success("Logout Successfull", {
+            toast.success("Logout Successful", {
                 position: "top-center",
                 autoClose: 1000,
                 closeOnClick: true,
@@ -52,7 +52,7 @@ const Logout = () => {
     else {
         return (
             <center>
-                <h1>Loggin You Out...</h1>
+                <h1>Logging You Out...</h1>
             </center>
         )
     }

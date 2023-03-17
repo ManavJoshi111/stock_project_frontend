@@ -17,7 +17,6 @@ import Logout from "./components/Logout";
 import CoinPage from "./components/CoinPage";
 import LivePrice from "./components/LivePrice";
 import Error from "./components/Error";
-import Test from "./components/Test";
 
 function App() {
   // const useStyles = makeStyles(() => {
@@ -52,7 +51,6 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Header />} />
-            <Route path="/test" element={<Test />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/logout" element={<Logout />} />

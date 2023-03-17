@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { Card as PCard } from 'primereact/card';
 import { Button } from "primereact/button";
-import { Card } from "react-bootstrap";
 
 const Checkout = ({ Symbol }) => {
     console.log(Symbol);
@@ -35,6 +34,7 @@ const Checkout = ({ Symbol }) => {
             // console.log(new Date().getSeconds())
         };
     }, []);
+
     const footer = (
         <span>
             <Button label="Save" icon="pi pi-check" />
