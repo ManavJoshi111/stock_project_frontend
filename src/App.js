@@ -19,10 +19,6 @@ import LivePrice from "./components/LivePrice";
 import Error from "./components/Error";
 
 function App() {
-  // const useStyles = makeStyles(() => {
-
-  // });
-  // const classes = useStyles();
   const [user, setUser] = useState({ name: null, email: null, contact: null });
   const isLoggedIn = async () => {
     const response = await fetch("http://localhost:8000/isLoggedIn", {
@@ -36,7 +32,8 @@ function App() {
     if (content.success === "true") {
       console.log("Content : ", content);
       console.log("User : ", content.user);
-      setUser(content.user);
+      setUser({ id: content.user._id, ...content.user });
+      console.log("User context : ", user);
     } else {
       setUser({});
     }

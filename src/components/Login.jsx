@@ -37,7 +37,7 @@ const Login = () => {
         theme: "dark"
       });
       console.log("Name : ", content.user.name);
-      setUser(() => { return { name: content.user.name, email: content.user.email, contact: content.user.contact } });
+      setUser(() => { return { id: content.user._id, name: content.user.name, email: content.user.email, contact: content.user.contact } });
       console.log("User is : ", user);
       navigate("/dashboard");
     } else {

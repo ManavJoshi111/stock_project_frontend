@@ -1,16 +1,54 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useState } from "react";
+import UserContext from "../Context/UserContext";
 
-const Checkout = ({ Symbol }) => {
+const Checkout = ({ Symbol, cid }) => {
     console.log(Symbol);
-
+    const { user, setUser } = useContext(UserContext);
     const [price, setPrice] = useState(0);
     const [qty, setQty] = useState(0);
-
+    console.log("Id is : ", user.id);
+    console.log("Id is : ", user.name);
+    console.log("Id is : ", user.email);
+    console.log("cid : ", cid);
     const handleChange = e => {
+        console.log("handleChange : ", e.target.name, " ", e.target.value);
         setQty(e.target.value);
     };
 
+    const buyStock = async () => {
+        const res = await fetch(`${process.env.REACT_APP_HOST}/purchase`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                uid: user.id,
+                cryptoId: cid,
+                price: price,
+                quantity: qty
+            })
+        });
+        const response = await res.json();
+        console.log("Response is : ", response);
+    }
+
+    const sellStock = async () => {
+        const res = await fetch(`${process.env.REACT_APP_HOST}/sell`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                uid: user.id,
+                cryptoId: cid,
+                price: price,
+                quantity: qty
+            })
+        });
+        const response = await res.json();
+        console.log("Response is : ", response);
+    }
     useEffect(() => {
         const ws = new WebSocket(
             `wss://stream.binance.com:9443/ws/${Symbol.toLowerCase()}@kline_1m`
@@ -45,7 +83,7 @@ const Checkout = ({ Symbol }) => {
             <div className="bg-white rounded-lg shadow-lg p-4" style={{ width: "18rem" }}>
                 <div className="font-bold text-lg">{Symbol}</div>
                 <div className="text-gray-700 text-base">
-                    Some quick example text to build on the card title and make up the bulk of the card's content.
+                    Buy and Sell your favourite stock from here
                 </div>
                 <label className="text-gray-700 font-bold" for="quantity">Quantity : </label>
                 <input
@@ -53,7 +91,7 @@ const Checkout = ({ Symbol }) => {
                     type="number"
                     id="quantity"
                     placeholder="Enter quantity"
-                    onchange="handleChange"
+                    onChange={handleChange}
                     value={qty}
                 />
                 <label className="text-gray-700 font-bold" for="price">Price : </label>
@@ -67,40 +105,18 @@ const Checkout = ({ Symbol }) => {
                 <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     type="button"
+                    onClick={sellStock}
                 >
                     Sell
                 </button>
                 <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     type="button"
+                    onClick={buyStock}
                 >
                     Buy
                 </button>
             </div>
-
-            {/* <Card style={{ width: "18rem" }}>
-                <Card.Body>
-                    <Card.Title>
-                        {Symbol}
-                    </Card.Title>
-                    <Card.Text>
-                        Some quick example text to build on the card title and make up the
-                        bulk of the card's content.
-                    </Card.Text>
-                    <label htmlFor="quantity">Quantity : </label>
-                    <input
-                        type="number"
-                        id="quantity"
-                        placeholder="Enter quantity"
-                        onChange={handleChange}
-                        value={qty}
-                    />
-                    <label htmlFor="quantity">Price : </label>
-                    <input type="text" id="price" readOnly value={price} />
-                    <Button variant="primary">Sell</Button>
-                    <Button variant="primary">Buy</Button>
-                </Card.Body>
-            </Card> */}
         </div>
     );
 };

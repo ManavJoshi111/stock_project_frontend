@@ -42,23 +42,22 @@ const Header = () => {
     }
     return (
         <>
-            <div className='flex justify-center'>
-                {/* <div className="content flex flex-wrap justify-around" style={{ gap: '20px 20px' }}> */}
-                <div className="grid grid-cols-3 gap-6 mt-3" style={{ gap: '20px 20px' }}>
+            <div className="flex justify-center">
+                <div class="flex flex-wrap justify-center">
                     {data.slice(first, rows).map((item, index) => {
                         if (!item.image)
                             console.log("Item : ", item);
                         return (
-                            <>
-                                <div className="transition delay-150 mt-3 mx-3 hover:cursor-pointer hover:shadow-xl">
-                                    <Card item={item} key={index} />
-                                </div>
-                            </>
+                            <div className="transition delay-150 mt-3 mx-3 hover:cursor-pointer hover:shadow-xl">
+                                <Card item={item} key={index} />
+                            </div>
                         )
-                    })
-                    }
+                    })}
                 </div>
             </div>
+
+
+
             <div className="flex justify-center mt-8">
                 <nav>
                     <ul className="flex">
