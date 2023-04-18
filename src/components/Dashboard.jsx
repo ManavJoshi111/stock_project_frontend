@@ -12,7 +12,8 @@ const Dashboard = () => {
             <>
                 <div className="flex flex-col items-center">
                     <img src="https://picsum.photos/200" alt="Profile picture" className="w-32 h-32 rounded-full object-cover mt-8" />
-                    <h1 className="text-3xl font-bold mt-4">John Doe</h1>
+                    <h1 className="text-3xl font-bold mt-4">{user.name}</h1>
+                    <h4 className="text-xl mt-1">{user.email}</h4>
                     <p className="text-gray-600 text-lg mt-2">Paper Trader</p>
                     <div className="mt-3 flex justify-between items-center bg-gray-100 px-8 py-4">
                         <div className="flex items-center">
@@ -34,7 +35,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div >
             </>
         )
     }
