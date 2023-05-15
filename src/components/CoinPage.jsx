@@ -11,15 +11,16 @@ const CoinPage = props => {
 
     const Symbol = coinMap.get(`${id}`.toUpperCase());
     return (
-        <div className="grid grid-cols-12 gap-4 m-4">
-            <div className="col-span-12 md:col-span-9 flex-grow">
-                <Chart Symbol={Symbol} />
-            </div>
-            <div className="col-span-12 md:col-span-3 flex-shrink-0">
-                <Checkout Symbol={Symbol} />
+        <div className="h-screen bg-gray-100" style={{ height: "calc(100vh - 64px)" }}>
+            <div className="grid grid-cols-12 gap-4 m-4">
+                <div className="col-span-12 md:col-span-9 flex-grow">
+                    <Chart Symbol={Symbol} />
+                </div>
+                <div className="col-span-12 md:col-span-3 flex-shrink-0 my-4">
+                    <Checkout Symbol={Symbol} />
+                </div>
             </div>
         </div>
-
     );
 };
 

@@ -23,65 +23,9 @@ const Chart = ({ Symbol }) => {
     const midnight = new Date(today);
     midnight.setHours(0, 0, 0, 0);
 
-    // const totalMilliseconds = now - midnight;
-    // const halfMilliseconds = Math.floor(totalMilliseconds / 2);
-
-    // const firstHalfEnd = new Date(midnight.getTime() + halfMilliseconds);
-    // const secondHalfStart = new Date(firstHalfEnd.getTime() + 1);
-
-    // const firstHalf = { start: midnight.getTime(), end: firstHalfEnd.getTime() };
-    // const secondHalf = { start: secondHalfStart.getTime(), end: now.getTime() };
-
     let ws = null;
 
     useEffect(() => {
-        // fetch(
-        //     `https://api.binance.com/api/v3/uiKlines?symbol=${Symbol}&interval=1m&startTime=${firstHalf.start}&endTime=${firstHalf.end}&limit=1000`
-        // )
-        //     .then(res => res.json())
-        //     .then(firstHalfData => {
-        //         fetch(
-        //             `https://api.binance.com/api/v3/uiKlines?symbol=${Symbol}&interval=1m&startTime=${secondHalf.start}&endTime=${secondHalf.end}&limit=1000`
-        //         )
-        //             .then(res => res.json())
-        //             .then(secondHalfData => {
-        //                 let newdata = [];
-
-        //                 testData = [...firstHalfData, ...secondHalfData];
-
-        //                 console.log(testData);
-
-        //                 testData.forEach(item => {
-        //                     newdata = [
-        //                         ...newdata,
-        //                         {
-        //                             date: new Date(item[0]),
-        //                             open: parseFloat(item[1]),
-        //                             high: parseFloat(item[2]),
-        //                             low: parseFloat(item[3]),
-        //                             close: parseFloat(item[4]),
-        //                             volume: parseFloat(item[5])
-        //                         }
-        //                     ];
-        //                 });
-
-        //                 console.log("in second call : ", newdata);
-
-        //                 chartRef.current.dataSource.push(newdata);
-        //                 chartRef.current.notifyInsertItem(
-        //                     chartRef.current.dataSource,
-        //                     0,
-        //                     newdata
-        //                 );
-        //             })
-        //             .catch(error => {
-        //                 console.error(error);
-        //             });
-        //     })
-        //     .catch(error => {
-        //         console.error(error);
-        //     });
-
         getDataAndUpdateChart(midnight, now, "1m");
 
         startWebSocketData("1m");
@@ -214,34 +158,6 @@ const Chart = ({ Symbol }) => {
             " end : ",
             new Date(secondHalf.end)
         );
-        // fetch(
-        //     `https://api.binance.com/api/v3/uiKlines?symbol=${Symbol}&interval=${interval}&startTime=${startOfRangeMillis}&endTime=${endOfRangeMillis}&limit=1000`
-        // )
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         let newdata = [];
-
-        //         console.log(data);
-
-        //         data.forEach(item => {
-        //             newdata = [
-        //                 ...newdata,
-        //                 {
-        //                     date: new Date(item[0]),
-        //                     open: parseFloat(item[1]),
-        //                     high: parseFloat(item[2]),
-        //                     low: parseFloat(item[3]),
-        //                     close: parseFloat(item[4]),
-        //                     volume: parseFloat(item[5])
-        //                 }
-        //             ];
-        //         });
-
-        //         chartRef.current.dataSource = newdata;
-        //     })
-        //     .catch(error => {
-        //         console.error(error);
-        //     });
 
         fetch(
             `https://api.binance.com/api/v3/uiKlines?symbol=${Symbol}&interval=${interval}&startTime=${firstHalf.start}&endTime=${firstHalf.end}&limit=1000`
@@ -381,40 +297,6 @@ const Chart = ({ Symbol }) => {
     // }
 
     return (
-        // <div className="container">
-        //     <div className="container" style={{ height: "500px", width: "800px" }}>
-        //         <IgrFinancialChart
-        //             ref={chartRef}
-        //             // tooltipTemplate={CustomTooltip}
-        //             toolTipType="data"
-        //             xAxisAutoScale={false}
-        //             xAxisMod="time"
-        //             // xAxisMinimumValue={today}
-        //             // xAxisMaximumValue={endOfDay}
-        //             xAxisLabelVisibility="collapsed"
-        //             width="100%"
-        //             height="100%"
-        //             isToolbarVisible={false}
-        //             chartType={"Candle"}
-        //             chartTitle="Crypto Trades"
-        //             titleAlignment="Left"
-        //             titleLeftMargin="25"
-        //             titleTopMargin="10"
-        //             titleBottomMargin="10"
-        //             subtitle="Binance - CryptoCoin Price, Currency in USD"
-        //             subtitleAlignment="Left"
-        //             subtitleLeftMargin="25"
-        //             subtitleTopMargin="5"
-        //             subtitleBottomMargin="10"
-        //             yAxisMode="Numeric"
-        //             yAxisVisibility={false}
-        //             yAxisLabelVisibility="collapsed"
-        //             finalValueAnnotationsVisible={false}
-        //             zoomSliderType="None"
-        //             dataSource={testData}
-        //         />
-        //     </div>
-        // </div>
         <div className="flex flex-col p-2">
             <div
                 className="w-full md:w-2/3 xl:w-1/2 my-6"
@@ -456,58 +338,65 @@ const Chart = ({ Symbol }) => {
             <div className="flex flex-wrap justify-around w-full my-6">
                 <button
                     className={`${btn === 0
-                        ? "bg-transparent text-blue-700 border border-blue-500"
-                        : "bg-blue-500 text-white"} hover:bg-blue-200 text-white font-bold py-2 px-4 rounded`}
+                        ? "bg-transparent text-blue-800 border border-blue-500"
+                        : "bg-blue-500 text-white hover:bg-blue-800 hover:text-white"}  font-bold my-2 py-2 px-4 rounded`}
                     onClick={() => handleClick(0)}
+                    disabled={btn === 0 ? true : false}
                 >
                     Live
                 </button>
                 <button
                     className={`${btn === 1
-                        ? "bg-transparent text-blue-700 border border-blue-500"
-                        : "bg-blue-500 text-white"} hover:bg-blue-200 text-white font-bold py-2 px-4 rounded`}
+                        ? "bg-transparent text-blue-800 border border-blue-500"
+                        : "bg-blue-500 text-white hover:bg-blue-800 hover:text-white"} font-bold my-2 py-2 px-4 rounded`}
                     onClick={() => handleClick(1)}
+                    disabled={btn === 1 ? true : false}
                 >
                     1D
                 </button>
                 <button
                     className={`${btn === 2
-                        ? "bg-transparent text-blue-700 border border-blue-500"
-                        : "bg-blue-500 text-white"} hover:bg-blue-200 text-white font-bold py-2 px-4 rounded`}
+                        ? "bg-transparent text-blue-800 border border-blue-500"
+                        : "bg-blue-500 text-white hover:bg-blue-800 hover:text-white"} font-bold my-2 py-2 px-4 rounded`}
                     onClick={() => handleClick(2)}
+                    disabled={btn === 2 ? true : false}
                 >
                     1W
                 </button>
                 <button
                     className={`${btn === 3
-                        ? "bg-transparent text-blue-700 border border-blue-500"
-                        : "bg-blue-500 text-white"} hover:bg-blue-200 text-white font-bold py-2 px-4 rounded`}
+                        ? "bg-transparent text-blue-800 border border-blue-500"
+                        : "bg-blue-500 text-white hover:bg-blue-800 hover:text-white"} font-bold my-2 py-2 px-4 rounded`}
                     onClick={() => handleClick(3)}
+                    disabled={btn === 3 ? true : false}
                 >
                     1M
                 </button>
                 <button
                     className={`${btn === 4
-                        ? "bg-transparent text-blue-700 border border-blue-500"
-                        : "bg-blue-500 text-white"} hover:bg-blue-200 text-white font-bold py-2 px-4 rounded`}
+                        ? "bg-transparent text-blue-800 border border-blue-500"
+                        : "bg-blue-500 text-white hover:bg-blue-800 hover:text-white"} font-bold my-2 py-2 px-4 rounded`}
                     onClick={() => handleClick(4)}
+                    disabled={btn === 4 ? true : false}
                 >
                     6M
                 </button>
                 <button
                     className={`${btn === 5
-                        ? "bg-transparent text-blue-700 border border-blue-500"
-                        : "bg-blue-500 text-white"} hover:bg-blue-200 text-white font-bold py-2 px-4 rounded`}
+                        ? "bg-transparent text-blue-800 border border-blue-500"
+                        : "bg-blue-500 text-white hover:bg-blue-800 hover:text-white"} font-bold my-2 py-2 px-4 rounded`}
                     onClick={() => handleClick(5)}
+                    disabled={btn === 5 ? true : false}
                 >
                     1Y
                 </button>
                 <button
                     ref={typeBtnRef}
                     className={`${btn === 6
-                        ? "bg-transparent text-blue-700 border border-blue-500"
-                        : "bg-blue-500 text-white"} hover:bg-blue-200 text-white font-bold py-2 px-4 rounded`}
+                        ? "bg-transparent text-blue-800 border border-blue-500"
+                        : "bg-blue-500 text-white hover:bg-blue-800 hover:text-white"} font-bold my-2 py-2 px-4 rounded`}
                     onClick={() => handleClick(6)}
+                    disabled={btn === 6 ? true : false}
                 >
                     Line
                 </button>

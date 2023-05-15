@@ -26,3 +26,11 @@
 .p-menubar-button {
     margin-left: auto !important;
 }
+
+.dot {
+    height: 4px;
+    width: 4px;
+    border-radius: 50%;
+    background-color: white;
+    margin: 2px;
+}

@@ -1,14 +1,51 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
+import UserContext from "../Context/UserContext";
+import { toast } from "react-toastify";
 
 const Checkout = ({ Symbol }) => {
 
+    const { user, setUser } = useContext(UserContext);
+
     const [price, setPrice] = useState(0);
-    const [qty, setQty] = useState("");
+    const [qty, setQty] = useState(0);
 
     const handleChange = e => {
         setQty(e.target.value);
     };
+
+
+    const handleBuy = async () => {
+
+
+        if (price <= 0 || qty <= 0) {
+            toast.error("Please fill the checkout details correctly !!", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                theme: "dark",
+            });
+        }
+
+        const data = {
+            uid: user.email,
+            cryptoId: Symbol,
+            price: price,
+            quantity: qty
+        }
+
+        const response = await fetch(`${process.env.REACT_APP_HOST}/purchase`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+    }
 
     useEffect(() => {
         const ws = new WebSocket(
