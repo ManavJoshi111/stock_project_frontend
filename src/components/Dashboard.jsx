@@ -20,6 +20,7 @@ IgrRingSeriesModule.register();
 const Dashboard = () => {
 
     const [loading, setLoading] = useState(true);
+    const [trades, setTrades] = useState({});
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -35,45 +36,46 @@ const Dashboard = () => {
         { value: 1000, category: 'Cardano', summary: "cardano", qty: 201 }
     ];
 
-    useEffect(() => {
-        document.title = getPageTitle(location.pathname);
+    const fetchData = async () => {
+        try {
 
-        setTimeout(() => {
-            setLoading(false);
-        }, 5000);
+            const response = await fetch(`${process.env.REACT_APP_HOST}/all-trades`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include"
+            });
 
-    }, [location.pathname]);
+            if (!response.ok) {
+                // Handle error if response status is not in the 2xx range
+                throw new Error("Failed to fetch trades");
+            }
 
+            const trades = await response.json();
+            // Process the fetched trades data
+            console.log(trades);
+            setTrades(trades);
 
-    const onSliceClick = () => {
+            setLoading(false)
 
-        console.log("slice clicked....");
-    }
-
-    const transactions = [
-        { id: 1, crypto: 'Bitcoin', type: 'Buy', qty: 21, price: '₹50,000', date: '2023-04-20T19:07:02.491+00:00' },
-        { id: 7, crypto: 'Bitcoin', type: 'Buy', qty: 21, price: '₹50,000', date: '2023-04-20T19:07:02.491+00:00' },
-        { id: 8, crypto: 'Bitcoin', type: 'Buy', qty: 21, price: '₹50,000', date: '2023-05-20T19:07:02.491+00:00' },
-        { id: 9, crypto: 'Bitcoin', type: 'Buy', qty: 21, price: '₹50,000', date: '2023-04-20T19:07:02.491+00:00' },
-        { id: 10, crypto: 'Bitcoin', type: 'Buy', qty: 21, price: '₹50,000', date: '2023-03-20T19:07:02.491+00:00' },
-        { id: 2, crypto: 'Ethereum', type: 'Sell', qty: 120, price: '₹4,000', date: '2021-03-20T19:07:02.491+00:00' },
-        { id: 3, crypto: 'Bitcoin', type: 'Sell', qty: 5, price: '₹55,00', date: '2023-01-20T19:07:02.491+00:00' },
-        { id: 4, crypto: 'Dogecoin', type: 'Buy', qty: 30, price: '₹2', date: '2022-04-20T19:07:02.491+00:00' },
-        { id: 5, crypto: 'Ethereum', type: 'Buy', qty: 80, price: '₹2', date: '2021-05-20T19:07:02.491+00:00' },
-        { id: 6, crypto: 'Bitcoin', type: 'Sell', qty: 20, price: '₹2', date: '2013-03-28T20:07:02.491+00:00' },
-    ];
-
-    const formatDate = (dateString) => {
-
-        console.log(dateString);
-        const [date, time] = dateString.split('T');
-        const [year, month, day] = date.split('-');
-        const [hours, minutes, seconds] = time.slice(0, -1).split(':');
-        const milliseconds = Number(time.slice(-1)) * 100;
-
-        return new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds, milliseconds));
+        } catch (error) {
+            // Handle any errors that occur during the request or parsing of response
+            console.error(error);
+        }
     };
 
+    useEffect(() => {
+        document.title = getPageTitle(location.pathname);
+    }, [location.pathname]);
+
+    useEffect(() => {
+        fetchData();
+    }, [])
+
+    const onSliceClick = () => {
+        console.log("slice clicked....");
+    }
 
     return (
         loading ? (
@@ -118,7 +120,7 @@ const Dashboard = () => {
             </div >
         ) : (
 
-            transactions.length <= 0 ?
+            trades.length <= 0 ?
                 <div class="h-screen flex flex-col md:flex-row items-center justify-center text-center" style={{ height: "calc(100vh - 64px)" }}>
                     <div className='m-4'>
                         <img src={cryptoImg} alt="crypto img" className='max-w-full max-h-80 rounded-md' />
@@ -241,12 +243,12 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="mt-4">
-                                        {transactions.length <= 0 ?
+                                        {trades.length <= 0 ?
                                             <div className="border-t border-gray-400 flex-1 text-center">
                                                 <h5 className="text-gray-800">No Orders to show</h5>
                                             </div> :
                                             Object.entries(
-                                                transactions.reduce((groups, transaction) => {
+                                                trades.reduce((groups, transaction) => {
                                                     const date = new Date(transaction.date).toLocaleDateString('en-US', {
                                                         timeZone: "UTC",
                                                         year: 'numeric',
@@ -274,7 +276,6 @@ const Dashboard = () => {
                                                                 day: 'numeric'
                                                             })}
                                                         </h4>
-                                                        {console.log(date)}
 
                                                         {group.map((transaction, index) => (
                                                             <div
@@ -284,13 +285,13 @@ const Dashboard = () => {
                                                             >
                                                                 <div className='flex-1'>
                                                                     <div>
-                                                                        <h3 className="font-bold">{transaction.crypto}</h3>
+                                                                        <h3 className="font-bold">{transaction.cryptoSymbol}</h3>
                                                                         <p>{transaction.type}</p>
                                                                     </div>
                                                                 </div>
                                                                 <div className='flex-1'>
                                                                     <div>
-                                                                        <h3>{transaction.qty}</h3>
+                                                                        <h3>{transaction.quantity}</h3>
                                                                         <p>Qty</p>
                                                                     </div>
                                                                 </div>

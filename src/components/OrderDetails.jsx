@@ -1,10 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 
 const OrderDetails = () => {
 
     const navigate = useNavigate();
     const { id } = useParams();
+
+    const [tradeInfo, setTradeInfo] = useState({});
+
+    const fetchData = async () => {
+        try {
+
+            const response = await fetch(`${process.env.REACT_APP_HOST}/tradeInfo/${id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include"
+            });
+
+            if (!response.ok) {
+                // Handle error if response status is not in the 2xx range
+                throw new Error("Failed to fetch trades");
+            }
+
+            const tradeInfo = await response.json();
+            // Process the fetched trades data
+            console.log(tradeInfo);
+            setTradeInfo(tradeInfo);
+
+        } catch (error) {
+            // Handle any errors that occur during the request or parsing of response
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+
+        fetchData();
+
+    }, [])
 
     return (
 

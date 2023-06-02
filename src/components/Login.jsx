@@ -39,7 +39,7 @@ const Login = () => {
       console.log("Name : ", content.user.name);
       setUser(() => { return { id: content.user._id, name: content.user.name, email: content.user.email, contact: content.user.contact } });
       console.log("User is : ", user);
-      navigate("/dashboard");
+      navigate("/");
     } else {
       console.log("Login Unsuccesful");
       toast.error(content.message, {
