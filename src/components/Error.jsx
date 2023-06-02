@@ -12,7 +12,7 @@ const Error = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                height: "100vh",
+                height: "calc(100vh - 64px)",
                 fontSize: "larger",
             }}
         >

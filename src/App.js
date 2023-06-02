@@ -17,6 +17,7 @@ import Logout from "./components/Logout";
 import CoinPage from "./components/CoinPage";
 import LivePrice from "./components/LivePrice";
 import Error from "./components/Error";
+import OrderDetails from "./components/OrderDetails";
 
 function App() {
   const [user, setUser] = useState({ name: null, email: null, contact: null });
@@ -54,6 +55,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/coin/:id" element={<CoinPage />} />
             <Route path="/liveprice" element={<LivePrice />} />
+            <Route path="/order/:id" element={<OrderDetails />} />
             <Route path="*" element={<Error />} />
           </Routes>
         </UserContext.Provider>

@@ -32,3 +32,11 @@
     background-color: #007bff !important;
     border-color: #007bff !important;
 }
+
+.dot {
+    height: 4px;
+    width: 4px;
+    border-radius: 50%;
+    background-color: white;
+    margin: 2px;
+}
