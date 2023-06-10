@@ -45,18 +45,18 @@ const LivePrice = () => {
         <>
             {/* Bootstrap Modal */}
             {/* <!-- Modal --> */}
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Chart Of {cryptoName}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { console.log("Clicked"); setCryptoName(undefined); }}></button>
+            <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Chart Of {cryptoName}</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { console.log("Clicked"); setCryptoName(undefined); }}></button>
                         </div>
-                        <div class="modal-body" id='chart'>
+                        <div className="modal-body" id='chart'>
                             {/* {useMemo(() => { return <Chart cryptoName={cryptoName} /> }, [cryptoName])} */}
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@ const LivePrice = () => {
                                             <td className='w-25'>{key}</td>
                                             <td className={color[key.toLowerCase()] + " w-25"}>{price[key]}</td>
                                             <td className="w-25">
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setCryptoName(key.toLowerCase()) }} >
+                                                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setCryptoName(key.toLowerCase()) }} >
                                                     Chart
                                                 </button>
                                             </td>

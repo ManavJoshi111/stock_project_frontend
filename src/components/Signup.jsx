@@ -90,7 +90,7 @@ const Signup = () => {
               <div className="text-3xl text-gray-700 uppercase text-center py-3 px-6 mb-0">
                 Sign UP
               </div>
-              <a className="mt-1 mb-2 g-signin2" onClick={() => { window.open('http://localhost:8000/auth/google', '_self') }} ><span class="g-icon"></span>Sign UP with Google</a>
+              <a className="mt-1 mb-2 g-signin2" onClick={() => { window.open('http://localhost:8000/auth/google', '_self') }} ><span className="g-icon"></span>Sign UP with Google</a>
 
               <form className="py-6 px-5">
                 <label htmlFor="name" className="block text-gray-700 text-lg font-bold mb-2">

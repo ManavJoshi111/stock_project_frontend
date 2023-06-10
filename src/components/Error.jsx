@@ -16,10 +16,10 @@ const Error = () => {
                 fontSize: "larger",
             }}
         >
-            <div class="card">
-                <div class="card-body text-center">
-                    <h1 class="text-danger m-2">404 </h1>
-                    <h3 class="text-danger">Error</h3>
+            <div className="card">
+                <div className="card-body text-center">
+                    <h1 className="text-danger m-2">404 </h1>
+                    <h3 className="text-danger">Error</h3>
                     <h3> page not found</h3>
                     <h4>
                         Please check your url or{" "}

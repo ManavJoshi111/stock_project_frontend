@@ -53,13 +53,15 @@ const Login = () => {
   };
   {
     if (user && user.email) {
-      return (toast.error("You are already LoggedIn", {
+      toast.success("You are already LoggedIn", {
         position: "top-center",
         autoClose: 1000,
         closeOnClick: true,
         draggable: true,
         theme: "dark"
-      }), navigate("../"));
+      })
+      navigate("../");
+      return
     }
     else {
       return (

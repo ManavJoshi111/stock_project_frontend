@@ -48,28 +48,30 @@ const Dashboard = () => {
             });
 
             if (!response.ok) {
-                // Handle error if response status is not in the 2xx range
                 throw new Error("Failed to fetch trades");
             }
 
             const trades = await response.json();
-            // Process the fetched trades data
             console.log(trades);
             setTrades(trades);
 
             setLoading(false)
 
         } catch (error) {
-            // Handle any errors that occur during the request or parsing of response
             console.error(error);
         }
     };
 
     useEffect(() => {
-        document.title = getPageTitle(location.pathname);
-    }, [location.pathname]);
 
-    useEffect(() => {
+        document.title = getPageTitle(location.pathname)
+
+        if (!user || !user.email) {
+            navigate("/login")
+            return
+        }
+
+
         fetchData();
     }, [])
 
@@ -121,13 +123,13 @@ const Dashboard = () => {
         ) : (
 
             trades.length <= 0 ?
-                <div class="h-screen flex flex-col md:flex-row items-center justify-center text-center" style={{ height: "calc(100vh - 64px)" }}>
+                <div className="h-screen flex flex-col md:flex-row items-center justify-center text-center" style={{ height: "calc(100vh - 64px)" }}>
                     <div className='m-4'>
                         <img src={cryptoImg} alt="crypto img" className='max-w-full max-h-80 rounded-md' />
                     </div>
                     <div className='mx-4'>
-                        <h2 class="text-gray-800 font-bold text-4xl my-4">Your Dashboard is Empty</h2>
-                        <h5 class="text-gray-500 text-2xl">Start investing today</h5>
+                        <h2 className="text-gray-800 font-bold text-4xl my-4">Your Dashboard is Empty</h2>
+                        <h5 className="text-gray-500 text-2xl">Start investing today</h5>
                     </div>
                 </div>
                 :
@@ -281,7 +283,7 @@ const Dashboard = () => {
                                                             <div
                                                                 className="border-t border-gray-400 p-2 flex justify-between hover:bg-gray-200 cursor-pointer ease-out duration-1000"
                                                                 key={index}
-                                                                onClick={() => { navigate(`/order/${transaction.id}`) }}
+                                                                onClick={() => { navigate(`/order/${transaction._id}`) }}
                                                             >
                                                                 <div className='flex-1'>
                                                                     <div>

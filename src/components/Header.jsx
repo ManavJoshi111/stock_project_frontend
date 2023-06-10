@@ -10,7 +10,7 @@ const Header = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
     const pages = Array.from({ length: 10 }, (_, i) => i + 1);
-    
+
     const handleClick = (e) => {
         let page = e.target.value;
         setCurrentPage(page);
@@ -43,7 +43,7 @@ const Header = () => {
     return (
         <>
             <div className="flex justify-center">
-                <div class="flex flex-wrap justify-center">
+                <div className="flex flex-wrap justify-center">
                     {data.slice(first, rows).map((item, index) => {
                         if (!item.image)
                             console.log("Item : ", item);

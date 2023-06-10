@@ -18,13 +18,16 @@ const Checkout = ({ Symbol }) => {
 
 
     const handleChange = e => {
-        console.log("handleChange : ", e.target.name, " ", e.target.value);
         setQty(e.target.value);
     };
 
 
     const handleBuy = async () => {
 
+        if (!user || !user.email) {
+            navigate("/login")
+            return
+        }
 
         if (price <= 0 || qty <= 0) {
             toast.error("Please fill the checkout details correctly !!", {
@@ -45,7 +48,7 @@ const Checkout = ({ Symbol }) => {
             quantity: qty
         }
 
-        const response = await fetch(`${process.env.REACT_APP_HOST}/buy`, {
+        const res = await fetch(`${process.env.REACT_APP_HOST}/buy`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -54,7 +57,9 @@ const Checkout = ({ Symbol }) => {
             body: JSON.stringify(data),
         });
 
-        if (!response.ok) {
+        const resData = await res.json();
+
+        if (!res.ok) {
             toast.error("There was a error while placing the order please try again later !!", {
                 position: "top-center",
                 autoClose: 3000,
@@ -67,12 +72,30 @@ const Checkout = ({ Symbol }) => {
             return
         }
 
-        navigate(`/order/${response.tradeInfo._id}`);
+        console.log(resData.tradeInfo);
+
+
+
+        toast.success("Order placed successfully !!", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            theme: "dark",
+        });
+        navigate(`/order/${resData.tradeInfo._id}`);
 
     }
 
     const handleSell = async () => {
 
+
+        if (!user || !user.email) {
+            navigate("/login")
+            return
+        }
 
         if (price <= 0 || qty <= 0) {
             toast.error("Please fill the checkout details correctly !!", {
@@ -106,7 +129,7 @@ const Checkout = ({ Symbol }) => {
             quantity: qty
         }
 
-        const response = await fetch(`${process.env.REACT_APP_HOST}/sell`, {
+        const res = await fetch(`${process.env.REACT_APP_HOST}/sell`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -115,7 +138,9 @@ const Checkout = ({ Symbol }) => {
             body: JSON.stringify(data),
         });
 
-        if (!response.ok) {
+        const resData = await res.json();
+
+        if (!res.ok) {
             toast.error("There was a error while placing the order please try again later !!", {
                 position: "top-center",
                 autoClose: 3000,
@@ -128,7 +153,17 @@ const Checkout = ({ Symbol }) => {
             return
         }
 
-        navigate(`/order/${response.tradeInfo._id}`);
+        console.log(resData.tradeInfo);
+        toast.success("Order placed successfully !!", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            theme: "dark",
+        });
+        navigate(`/order/${resData.tradeInfo._id}`);
 
     }
 
@@ -144,17 +179,13 @@ const Checkout = ({ Symbol }) => {
             });
 
             if (!response.ok) {
-                // Handle error if response status is not in the 2xx range
                 throw new Error("Failed to fetch trades");
             }
 
             const holdingQty = await response.json();
-            // Process the fetched trades data
-            console.log(holdingQty.holdingQty);
             setHoldingQty(holdingQty.holdingQty);
 
         } catch (error) {
-            // Handle any errors that occur during the request or parsing of response
             console.error(error);
         }
     };
@@ -186,40 +217,6 @@ const Checkout = ({ Symbol }) => {
 
     return (
         <>
-            {/* <div className="bg-white rounded-lg shadow-lg p-4" style={{ width: "18rem" }}> */}
-            {/* <div className="font-bold text-lg">{Symbol}</div>
-                <div className="text-gray-700 text-base">
-                    Some quick example text to build on the card title and make up the bulk of the card's content.
-                </div>
-                <label className="text-gray-700 font-bold" for="quantity">Quantity : </label>
-                <input
-                    className="border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="number"
-                    id="quantity"
-                    placeholder="Enter quantity"
-                    onchange="handleChange"
-                    value={qty}
-                />
-                <label className="text-gray-700 font-bold" for="price">Price : </label>
-                <input
-                    className="border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text"
-                    id="price"
-                    readonly
-                    value={price}
-                />
-                <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    type="button"
-                >
-                    Sell
-                </button>
-                <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    type="button"
-                >
-                    Buy
-                </button> */}
             <div className="flex flex-col justify-between  bg-white rounded-lg shadow-lg p-6 h-full">
                 <div className="flex flex-col">
                     <h2 className="text-xl font-bold mb-4">{Symbol}</h2>

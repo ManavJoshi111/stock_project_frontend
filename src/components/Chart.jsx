@@ -52,7 +52,7 @@ const Chart = ({ Symbol }) => {
             const dataJson = JSON.parse(e.data);
 
             if (interval === "1m") {
-                console.log("inside min");
+                // console.log("inside min");
 
                 data.push({
                     date: new Date(dataJson.k.t),
@@ -70,7 +70,7 @@ const Chart = ({ Symbol }) => {
                     data[data.length - 2].date.getTime() !==
                     data[data.length - 1].date.getTime()
                 ) {
-                    console.log(data);
+                    // console.log(data);
                     // Compute the values for the candlestick chart
 
                     let newdata = {
@@ -104,7 +104,7 @@ const Chart = ({ Symbol }) => {
                     data = [];
                 }
             } else {
-                console.log("inside sec");
+                // console.log("inside sec");
                 const secData = {
                     date: new Date(dataJson.k.t),
                     open: parseFloat(dataJson.k.o),
@@ -146,19 +146,6 @@ const Chart = ({ Symbol }) => {
             end: endOfDay.getTime()
         };
 
-        console.log(
-            "1 start : ",
-            new Date(firstHalf.start),
-            " end : ",
-            new Date(firstHalf.end)
-        );
-        console.log(
-            "2 start : ",
-            new Date(secondHalf.start),
-            " end : ",
-            new Date(secondHalf.end)
-        );
-
         fetch(
             `https://api.binance.com/api/v3/uiKlines?symbol=${Symbol}&interval=${interval}&startTime=${firstHalf.start}&endTime=${firstHalf.end}&limit=1000`
         )
@@ -186,14 +173,7 @@ const Chart = ({ Symbol }) => {
                                 }
                             ];
                         });
-
-                        // chartRef.current.dataSource.push(newdata);
-                        // chartRef.current.notifyInsertItem(
-                        //     chartRef.current.dataSource,
-                        //     0,
-                        //     newdata
-                        // );
-                        console.log("all data : ", newdata);
+                        
                         chartRef.current.dataSource = newdata;
                     })
                     .catch(error => {
@@ -212,7 +192,7 @@ const Chart = ({ Symbol }) => {
             case 0:
                 stopWebSocketData();
 
-                console.log(now.getHours());
+                // console.log(now.getHours());
 
                 getDataAndUpdateChart(
                     new Date(
