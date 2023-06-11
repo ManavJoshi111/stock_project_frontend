@@ -68,10 +68,8 @@ const Dashboard = () => {
 
         if (!user || !user.email) {
             navigate("/login")
-            return
+            return;
         }
-
-
         fetchData();
     }, [])
 

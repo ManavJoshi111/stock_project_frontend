@@ -27,7 +27,7 @@ const Login = () => {
       body: JSON.stringify(data),
     });
     const content = await response.json();
-    console.log("Response : ", content);
+    console.log("Response : ", content.error);
     if (content.success === "true") {
       toast.success("Login Successfull", {
         position: "top-center",
@@ -42,7 +42,7 @@ const Login = () => {
       navigate("/");
     } else {
       console.log("Login Unsuccesful");
-      toast.error(content.message, {
+      toast.error(content.error, {
         position: "top-center",
         autoClose: 1000,
         closeOnClick: true,
