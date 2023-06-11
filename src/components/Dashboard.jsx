@@ -9,7 +9,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 import UserContext from '../Context/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { toast } from "react-toastify";
 import cryptoImg from '../assets/crypto.jpg';
 import GoToTopButton from './GoToTopButton';
 import getPageTitle from '../modules/getPageTitle';
@@ -48,7 +48,18 @@ const Dashboard = () => {
             });
 
             if (!response.ok) {
-                throw new Error("Failed to fetch trades");
+
+                if (response.status === 401) {
+                    toast.error("You are not loggedIn", {
+                        position: "top-center",
+                        autoClose: 1000,
+                        closeOnClick: true,
+                        draggable: true,
+                        theme: "dark"
+                    });
+                    navigate("/login");
+                    return;
+                }
             }
 
             const trades = await response.json();
@@ -66,10 +77,10 @@ const Dashboard = () => {
 
         document.title = getPageTitle(location.pathname)
 
-        if (!user || !user.email) {
-            navigate("/login")
-            return;
-        }
+        // if (!user || !user.email) {
+        //     navigate("/login")
+        //     return;
+        // }
         fetchData();
     }, [])
 

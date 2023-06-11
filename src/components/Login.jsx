@@ -53,7 +53,8 @@ const Login = () => {
   };
   {
     if (user && user.email) {
-      toast.success("You are already LoggedIn", {
+      console.log("in login user is : ");
+      toast.error("You are already LoggedIn", {
         position: "top-center",
         autoClose: 1000,
         closeOnClick: true,

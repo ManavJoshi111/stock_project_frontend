@@ -34,7 +34,6 @@ function App() {
       console.log("Content : ", content);
       console.log("User : ", content.user);
       setUser({ id: content.user._id, ...content.user });
-      console.log("User context : ", user);
     } else {
       setUser({});
     }
