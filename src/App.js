@@ -22,7 +22,7 @@ import OrderDetails from "./components/OrderDetails";
 function App() {
   const [user, setUser] = useState({ name: null, email: null, contact: null });
   const isLoggedIn = async () => {
-    const response = await fetch("http://localhost:8000/isLoggedIn", {
+    const response = await fetch(`${process.env.REACT_APP_HOST}/isLoggedIn`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
