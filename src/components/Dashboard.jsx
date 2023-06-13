@@ -6,7 +6,6 @@ import { IgrRingSeriesModule } from 'igniteui-react-charts';
 import { IgrRingSeries } from 'igniteui-react-charts';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-
 import UserContext from '../Context/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
@@ -18,9 +17,10 @@ IgrDoughnutChartModule.register();
 IgrRingSeriesModule.register();
 
 const Dashboard = () => {
-
     const [loading, setLoading] = useState(true);
     const [trades, setTrades] = useState({});
+    const [buyChecked, setBuyChecked] = useState(false);
+    const [sellChecked, setSellChecked] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -28,18 +28,27 @@ const Dashboard = () => {
 
     const qtyChartRef = useRef(0);
     const invChartRef = useRef(0);
+    console.log("user in dashboard", user)
+    // const data = [
+    //     { value: 1500, category: 'Bitcoin', summary: "btc", qty: 21 },
+    //     { value: 1000, category: 'Ethereum', summary: "eth", qty: 5 },
+    //     { value: 500, category: 'Dogecoin', summary: "doge", qty: 100 },
+    //     { value: 1000, category: 'Cardano', summary: "cardano", qty: 201 }
+    // ];
 
-    const data = [
-        { value: 1500, category: 'Bitcoin', summary: "btc", qty: 21 },
-        { value: 1000, category: 'Ethereum', summary: "eth", qty: 5 },
-        { value: 500, category: 'Dogecoin', summary: "doge", qty: 100 },
-        { value: 1000, category: 'Cardano', summary: "cardano", qty: 201 }
-    ];
+    const handleCheckbox = (e) => {
+        if (e.target.name === "buyCheckbox") {
+            setBuyChecked(!buyChecked);
+        }
+        else {
+            setSellChecked(!sellChecked);
+        }
+
+    }
 
     const fetchData = async () => {
         try {
-
-            const response = await fetch(`${process.env.REACT_APP_HOST}/all-trades`, {
+            const response = await fetch(`${process.env.REACT_APP_HOST}/all-trades?buyChecked=${buyChecked}&&sellChecked=${sellChecked}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -65,7 +74,6 @@ const Dashboard = () => {
             const trades = await response.json();
             console.log(trades);
             setTrades(trades);
-
             setLoading(false)
 
         } catch (error) {
@@ -75,14 +83,14 @@ const Dashboard = () => {
 
     useEffect(() => {
 
-        document.title = getPageTitle(location.pathname)
+        document.title = getPageTitle(location.pathname);
 
         // if (!user || !user.email) {
         //     navigate("/login")
         //     return;
         // }
         fetchData();
-    }, [])
+    }, [buyChecked, sellChecked])
 
     const onSliceClick = () => {
         console.log("slice clicked....");
@@ -127,10 +135,8 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-
             </div >
         ) : (
-
             trades.length <= 0 ?
                 <div className="h-screen flex flex-col md:flex-row items-center justify-center text-center" style={{ height: "calc(100vh - 64px)" }}>
                     <div className='m-4'>
@@ -148,32 +154,20 @@ const Dashboard = () => {
                     {/* Sidebar */}
                     <div className="w-full md:w-1/4 bg-white p-4 md:m-4 flex-shrink-0 md:h-auto rounded-lg shadow-lg ">
                         <div className="flex flex-col items-center justify-center mb-4">
-                            <img className="w-40 h-40 rounded-full mb-2" src="https://picsum.photos/400" alt="User Profile" />
                             <h2 className="text-2xl font-bold text-gray-800">{user.name ? user.name : "userName"}</h2>
+                            <h3 className='text-xl font-bold text-gray-600'> {user.email ? user.email : "Email ID"}</h3>
                         </div>
                         <div className="mt-8 mr-4">
                             <h5 className="font-bold uppercase text-gray-500 mb-2">Filters</h5>
                             <div className="flex flex-col">
                                 <label className="inline-flex items-center mt-3">
-                                    <input type="checkbox" className="form-checkbox h-5 w-5 text-gray-600" />
+                                    <input type="checkbox" className="form-checkbox h-5 w-5 text-gray-600" checked={buyChecked} name="buyCheckbox" onChange={handleCheckbox} value={buyChecked} />
                                     <span className="ml-2 text-gray-700">Buy Orders</span>
                                 </label>
                                 <label className="inline-flex items-center mt-3">
-                                    <input type="checkbox" className="form-checkbox h-5 w-5 text-gray-600" />
+                                    <input type="checkbox" className="form-checkbox h-5 w-5 text-gray-600" checked={sellChecked} name="sellChackbox" onChange={handleCheckbox} value={sellChecked} />
                                     <span className="ml-2 text-gray-700">Sell Orders</span>
                                 </label>
-                                <div className="mt-3">
-                                    <label className="block text-gray-700 font-bold mb-2" htmlFor="fromDate">
-                                        From Date
-                                    </label>
-                                    <input type="date" id="fromDate" name="fromDate" className="form-input w-full border border-green-200 rounded-md p-2" />
-                                </div>
-                                <div className="mt-3">
-                                    <label className="block text-gray-700 font-bold mb-2" htmlFor="toDate">
-                                        To Date
-                                    </label>
-                                    <input type="date" id="toDate" name="toDate" className="form-input w-full border border-green-200 rounded-md p-2" />
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -184,19 +178,11 @@ const Dashboard = () => {
                         <div className="w-full p-2">
                             <div className="bg-white rounded-lg shadow-lg p-4 flex flex-row justify-around items-center">
                                 <div className="flex-1 text-center px-4">
-                                    <h5 className="font-bold uppercase text-gray-500">Invested Value</h5>
-                                    <h3 className="font-bold">$10,00,000</h3>
-                                </div>
-                                <div className="flex-1 text-center px-4">
-                                    <h5 className="font-bold uppercase text-gray-500">Current Value</h5>
-                                    <h3 className="font-bold">$18,00,000</h3>
-                                </div>
-                                <div className="flex-1 text-center px-4">
-                                    <h5 className="font-bold uppercase text-gray-500">Returns</h5>
-                                    <h3 className="font-bold text-green-500">$8,00,000 (+25%)</h3>
+                                    <h5 className="font-bold uppercase text-gray-500">Budget</h5>
+                                    <h3 className="font-bold">{(user.budget).toFixed(2)}</h3>
                                 </div>
                             </div>
-                            <div className='mt-4 flex flex-col md:flex-row'>
+                            {/* <div className='mt-4 flex flex-col md:flex-row'>
                                 <div className='flex-1 md:pr-2 my-2'>
                                     <h2 className='text-lg font-bold mx-4'>Investments</h2>
                                     <IgrDoughnutChart
@@ -243,7 +229,7 @@ const Dashboard = () => {
                                         />
                                     </IgrDoughnutChart>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="flex flex-wrap justify-center mt-4">
                             <div className="w-full p-3">
