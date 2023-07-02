@@ -46,8 +46,7 @@ const Header = () => {
             <div className="flex justify-center">
                 <div className="flex flex-wrap justify-center">
                     {data.slice(first, rows).map((item, index) => {
-                        if (!item.image) {
-                            console.log();
+                        if (item.image) {
                             return (
                                 <div className="transition delay-150 mt-3 mx-3 hover:cursor-pointer hover:shadow-xl" >
                                     <Card item={item} key={index} />

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Checkout = ({ Symbol }) => {
 
-    const { user, setUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
 
     const [price, setPrice] = useState(0);
@@ -61,7 +61,7 @@ const Checkout = ({ Symbol }) => {
         const resData = await res.json();
 
         if (!res.ok) {
-            toast.error("There was a error while placing the order please try again later !!", {
+            toast.error(resData.err, {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -142,7 +142,7 @@ const Checkout = ({ Symbol }) => {
         const resData = await res.json();
 
         if (!res.ok) {
-            toast.error("There was a error while placing the order please try again later !!", {
+            toast.error(resData.err, {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,

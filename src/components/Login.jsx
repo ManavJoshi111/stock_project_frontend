@@ -17,7 +17,7 @@ const Login = () => {
   };
 
   const sendData = async () => {
-    console.log("Data is : ", data);
+    // console.log("Data is : ", data);
     const response = await fetch(`${process.env.REACT_APP_HOST}/login`, {
       method: "POST",
       headers: {

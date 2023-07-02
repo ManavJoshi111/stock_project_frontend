@@ -27,7 +27,7 @@ const Dashboard = () => {
     const location = useLocation();
     const qtyChartRef = useRef(0);
     const invChartRef = useRef(0);
-    console.log("user in dashboard", user)
+    // console.log("user in dashboard", user)
 
     const handleCheckbox = (e) => {
         if (e.target.name === "buyCheckbox") {
@@ -65,7 +65,7 @@ const Dashboard = () => {
             }
 
             const trades = await response.json();
-            console.log(trades);
+            // console.log(trades);
             setTrades(trades);
             setLoading(false)
 
@@ -85,7 +85,7 @@ const Dashboard = () => {
         const content = await response.json();
         if (content.success === "true") {
             setUser(() => { return { id: content.user._id, name: content.user.name, email: content.user.email, contact: content.user.contact, budget: content.user.budget } });
-            console.log("User is : ", user);
+            // console.log("User is : ", user);
         } else {
             setUser({});
         }

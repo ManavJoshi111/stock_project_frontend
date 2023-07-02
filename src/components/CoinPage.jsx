@@ -4,9 +4,8 @@ import coinMap from "../modules/coingeko_to_binance_map";
 import Checkout from "./Checkout";
 import Chart from "./Chart";
 
-const CoinPage = props => {
+const CoinPage = () => {
 
-    const navigate = useNavigate();
     const { id } = useParams();
 
     const Symbol = coinMap.get(`${id}`.toUpperCase());
