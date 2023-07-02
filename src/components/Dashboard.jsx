@@ -28,12 +28,6 @@ const Dashboard = () => {
     const qtyChartRef = useRef(0);
     const invChartRef = useRef(0);
     console.log("user in dashboard", user)
-    // const data = [
-    //     { value: 1500, category: 'Bitcoin', summary: "btc", qty: 21 },
-    //     { value: 1000, category: 'Ethereum', summary: "eth", qty: 5 },
-    //     { value: 500, category: 'Dogecoin', summary: "doge", qty: 100 },
-    //     { value: 1000, category: 'Cardano', summary: "cardano", qty: 201 }
-    // ];
 
     const handleCheckbox = (e) => {
         if (e.target.name === "buyCheckbox") {

@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Card = (props) => {
     const { item } = props;
-    // console.log("Item : ", item.price_change_percentage_24h);
     const navigate = useNavigate();
     return (
         <>
