@@ -50,7 +50,6 @@ const Chart = ({ Symbol }) => {
             const dataJson = JSON.parse(e.data);
 
             if (interval === "1m") {
-                // console.log("inside min");
 
                 data.push({
                     date: new Date(dataJson.k.t),
@@ -61,14 +60,11 @@ const Chart = ({ Symbol }) => {
                     volume: parseFloat(dataJson.k.v)
                 });
 
-                // console.log(new Date().getSeconds());
-
                 if (
                     data.length > 2 &&
                     data[data.length - 2].date.getTime() !==
                     data[data.length - 1].date.getTime()
                 ) {
-                    // console.log(data);
                     // Compute the values for the candlestick chart
 
                     let newdata = {
@@ -81,7 +77,6 @@ const Chart = ({ Symbol }) => {
                     };
 
                     for (const point of data) {
-                        // console.log(point);
                         newdata.date = point.date;
 
                         if (!newdata.open) {
@@ -93,8 +88,6 @@ const Chart = ({ Symbol }) => {
                         newdata.volume = Math.max(newdata.volume, point.volume);
                     }
 
-                    // console.log(newdata);
-
                     updateChart(newdata);
 
                     // Clear the stored data and innerCounter
@@ -102,7 +95,6 @@ const Chart = ({ Symbol }) => {
                     data = [];
                 }
             } else {
-                // console.log("inside sec");
                 const secData = {
                     date: new Date(dataJson.k.t),
                     open: parseFloat(dataJson.k.o),
@@ -118,7 +110,6 @@ const Chart = ({ Symbol }) => {
     };
 
     const updateChart = newdata => {
-        // console.log(newdata);
 
         chartRef.current.dataSource.push(newdata);
         chartRef.current.notifyInsertItem(
@@ -189,8 +180,6 @@ const Chart = ({ Symbol }) => {
         switch (target) {
             case 0:
                 stopWebSocketData();
-
-                // console.log(now.getHours());
 
                 getDataAndUpdateChart(
                     new Date(
