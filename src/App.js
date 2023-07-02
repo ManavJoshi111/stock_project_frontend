@@ -18,6 +18,8 @@ import CoinPage from "./components/CoinPage";
 import LivePrice from "./components/LivePrice";
 import Error from "./components/Error";
 import OrderDetails from "./components/OrderDetails";
+import ContactUsPage from "./components/ContactUsPage";
+import About from "./components/About";
 
 function App() {
   const [user, setUser] = useState({ name: null, email: null, contact: null });
@@ -55,6 +57,8 @@ function App() {
             <Route path="/coin/:id" element={<CoinPage />} />
             <Route path="/liveprice" element={<LivePrice />} />
             <Route path="/order/:id" element={<OrderDetails />} />
+            <Route path="/contact" element={<ContactUsPage />} />
+            <Route path="/about" element={<About />} />
             <Route path="*" element={<Error />} />
           </Routes>
         </UserContext.Provider>

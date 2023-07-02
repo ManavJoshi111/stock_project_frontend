@@ -8,6 +8,7 @@ const Checkout = ({ Symbol }) => {
 
     const { user, setUser } = useContext(UserContext);
 
+
     const [price, setPrice] = useState(0);
     const [qty, setQty] = useState(0);
 
@@ -228,15 +229,15 @@ const Checkout = ({ Symbol }) => {
                         <label className="text-gray-600 font-medium">Quantity:</label>
                         <input type="number" onChange={handleChange} className="text-gray-700 font-medium w-1/2 text-right border border-gray-400 py-2 px-3 rounded-lg" value={qty} />
                     </div>
-                    <div className="flex justify-between  mt-4">
+                    {user.email && <div className="flex justify-between  mt-4">
                         <label htmlFor="">Holding Quantity : </label>
                         <p>{holdingQty}</p>
-                    </div>
+                    </div>}
                 </div>
-                <div className="flex justify-between">
+                {user.email && <div className="flex justify-between">
                     <button onClick={handleSell} className="bg-red-500 text-white font-medium py-2 px-4 rounded-lg">Sell</button>
                     <button onClick={handleBuy} className="bg-green-500 text-white font-medium py-2 px-4 rounded-lg mr-2">Buy</button>
-                </div>
+                </div>}
             </div>
 
         </>

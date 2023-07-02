@@ -8,8 +8,6 @@ const Chart = ({ Symbol }) => {
     const chartRef = useRef(0);
     const typeBtnRef = useRef(0);
 
-    const [btn, setBtn] = useState(1);
-
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const endOfDay = new Date(
@@ -173,7 +171,7 @@ const Chart = ({ Symbol }) => {
                                 }
                             ];
                         });
-                        
+
                         chartRef.current.dataSource = newdata;
                     })
                     .catch(error => {
@@ -211,12 +209,14 @@ const Chart = ({ Symbol }) => {
 
             case 1:
                 stopWebSocketData();
+
                 getDataAndUpdateChart(midnight, now, "1m");
                 startWebSocketData("1m");
                 break;
 
             case 2:
                 stopWebSocketData();
+
                 getDataAndUpdateChart(
                     new Date(now.getFullYear(), now.getMonth(), now.getDate() - 6),
                     new Date(),
@@ -226,6 +226,7 @@ const Chart = ({ Symbol }) => {
 
             case 3:
                 stopWebSocketData();
+
                 getDataAndUpdateChart(
                     new Date(now.getFullYear(), now.getMonth(), now.getDate() - 29),
                     new Date(),
@@ -235,6 +236,7 @@ const Chart = ({ Symbol }) => {
 
             case 4:
                 stopWebSocketData();
+
                 getDataAndUpdateChart(
                     new Date(now.getFullYear(), now.getMonth() - 5, now.getDate()),
                     new Date(),
@@ -244,6 +246,7 @@ const Chart = ({ Symbol }) => {
 
             case 5:
                 stopWebSocketData();
+
                 getDataAndUpdateChart(
                     new Date(now.getFullYear() - 1, now.getMonth(), now.getDate()),
                     new Date(),
@@ -252,6 +255,7 @@ const Chart = ({ Symbol }) => {
                 break;
 
             case 6:
+
                 chartRef.current.chartType = chartRef.current.chartType === 2 ? 4 : 2;
                 typeBtnRef.current.innerText =
                     chartRef.current.chartType === 2 ? "Line" : "Candle";
@@ -289,8 +293,6 @@ const Chart = ({ Symbol }) => {
                         toolTipType="data"
                         xAxisAutoScale={false}
                         xAxisMod="time"
-                        // xAxisMinimumValue={today}
-                        // xAxisMaximumValue={endOfDay}
                         xAxisLabelVisibility="collapsed"
                         width="100%"
                         height="100%"
@@ -306,10 +308,9 @@ const Chart = ({ Symbol }) => {
                         subtitleLeftMargin="25"
                         subtitleTopMargin="5"
                         subtitleBottomMargin="10"
-                        yAxisMode="Numeric"
+                        yAxisMode="numeric"
                         yAxisVisibility={true}
-                        yAxisLabelVisibility="collapsed"
-                        finalValueAnnotationsVisible={false}
+                        finalValueAnnotationsVisible={true}
                         zoomSliderType="None"
                         dataSource={testData}
                     />
@@ -317,71 +318,57 @@ const Chart = ({ Symbol }) => {
             </div>
             <div className="flex flex-wrap justify-around w-full my-6">
                 <button
-                    className={`${btn === 0
-                        ? "bg-transparent text-blue-800 border border-blue-500"
-                        : "bg-blue-500 text-white hover:bg-blue-800 hover:text-white"}  font-bold my-2 py-2 px-4 rounded`}
+                    className={
+                        "bg-blue-500 text-white hover:bg-blue-800 hover:text-white font-bold my-2 py-2 px-4 rounded"}
                     onClick={() => handleClick(0)}
-                    disabled={btn === 0 ? true : false}
                 >
                     Live
                 </button>
                 <button
-                    className={`${btn === 1
-                        ? "bg-transparent text-blue-800 border border-blue-500"
-                        : "bg-blue-500 text-white hover:bg-blue-800 hover:text-white"} font-bold my-2 py-2 px-4 rounded`}
+                    className={
+                        "bg-blue-500 text-white hover:bg-blue-800 hover:text-white font-bold my-2 py-2 px-4 rounded"}
                     onClick={() => handleClick(1)}
-                    disabled={btn === 1 ? true : false}
                 >
                     1D
                 </button>
                 <button
-                    className={`${btn === 2
-                        ? "bg-transparent text-blue-800 border border-blue-500"
-                        : "bg-blue-500 text-white hover:bg-blue-800 hover:text-white"} font-bold my-2 py-2 px-4 rounded`}
+                    className={
+                        "bg-blue-500 text-white hover:bg-blue-800 hover:text-white font-bold my-2 py-2 px-4 rounded"}
                     onClick={() => handleClick(2)}
-                    disabled={btn === 2 ? true : false}
                 >
                     1W
                 </button>
                 <button
-                    className={`${btn === 3
-                        ? "bg-transparent text-blue-800 border border-blue-500"
-                        : "bg-blue-500 text-white hover:bg-blue-800 hover:text-white"} font-bold my-2 py-2 px-4 rounded`}
+                    className={
+                        "bg-blue-500 text-white hover:bg-blue-800 hover:text-white font-bold my-2 py-2 px-4 rounded"}
                     onClick={() => handleClick(3)}
-                    disabled={btn === 3 ? true : false}
                 >
                     1M
-                </button>
+                </button >
                 <button
-                    className={`${btn === 4
-                        ? "bg-transparent text-blue-800 border border-blue-500"
-                        : "bg-blue-500 text-white hover:bg-blue-800 hover:text-white"} font-bold my-2 py-2 px-4 rounded`}
+                    className={
+                        "bg-blue-500 text-white hover:bg-blue-800 hover:text-white font-bold my-2 py-2 px-4 rounded"}
                     onClick={() => handleClick(4)}
-                    disabled={btn === 4 ? true : false}
                 >
                     6M
-                </button>
+                </button >
                 <button
-                    className={`${btn === 5
-                        ? "bg-transparent text-blue-800 border border-blue-500"
-                        : "bg-blue-500 text-white hover:bg-blue-800 hover:text-white"} font-bold my-2 py-2 px-4 rounded`}
+                    className={
+                        "bg-blue-500 text-white hover:bg-blue-800 hover:text-white font-bold my-2 py-2 px-4 rounded"}
                     onClick={() => handleClick(5)}
-                    disabled={btn === 5 ? true : false}
                 >
                     1Y
-                </button>
+                </button >
                 <button
                     ref={typeBtnRef}
-                    className={`${btn === 6
-                        ? "bg-transparent text-blue-800 border border-blue-500"
-                        : "bg-blue-500 text-white hover:bg-blue-800 hover:text-white"} font-bold my-2 py-2 px-4 rounded`}
+                    className={
+                        "bg-blue-500 text-white hover:bg-blue-800 hover:text-white font-bold my-2 py-2 px-4 rounded"}
                     onClick={() => handleClick(6)}
-                    disabled={btn === 6 ? true : false}
                 >
                     Line
-                </button>
-            </div>
-        </div>
+                </button >
+            </div >
+        </div >
     );
 };
 
