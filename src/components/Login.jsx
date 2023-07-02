@@ -74,7 +74,7 @@ const Login = () => {
                 <div className="text-3xl text-gray-700 uppercase text-center py-3 px-6 mb-0">
                   Login
                 </div>
-                <a className="mt-3 mb-2 g-signin2" onClick={() => { window.open('http://localhost:8000/auth/google', '_self') }} ><span className="g-icon"></span>Login with Google</a>
+                <a className="mt-3 mb-2 g-signin2" onClick={() => { window.open(process.env.REACT_APP_GOOGLE_AUTH_URL, '_self') }} ><span className="g-icon"></span>Login with Google</a>
 
                 <form className="py-10 px-5">
                   <div className="flex flex-wrap mb-6">
