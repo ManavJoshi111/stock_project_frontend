@@ -17,6 +17,8 @@ const Logout = () => {
         const content = await res.json();
         console.log("Content in logout : ", content);
         if (content.success === "true") {
+            // clear the context
+            setUser(null);
             toast.success("Logout Successful", {
                 position: "top-center",
                 autoClose: 1000,
@@ -52,7 +54,14 @@ const Logout = () => {
     else {
         return (
             <center>
-                <h1>Logging You Out...</h1>
+                <div className="flex justify-center items-center mt-52  flex-col">
+                    <div className="flex justify-center items-center mb-4">
+                        <div className="mr-3 rounded-full border-4 bg-gray-400 border-gray-400 w-12 h-12 animate-ping"></div>
+                        <div className="mr-3 rounded-full border-4 bg-gray-400 border-gray-400 w-12 h-12 animate-ping"></div>
+                        <div className="mr-3 rounded-full border-4 bg-gray-400 border-gray-400 w-12 h-12 animate-ping"></div>
+                    </div>
+                    <div><h1 className="text-3xl text-gray-800">Logging You Out...!</h1></div>
+                </div>
             </center>
         )
     }

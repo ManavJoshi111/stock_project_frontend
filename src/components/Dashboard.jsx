@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useRef, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { useRef } from 'react';
 import { IgrDoughnutChart } from 'igniteui-react-charts';
 import { IgrDoughnutChartModule } from 'igniteui-react-charts';
 import { IgrRingSeriesModule } from 'igniteui-react-charts';
@@ -17,6 +17,7 @@ IgrDoughnutChartModule.register();
 IgrRingSeriesModule.register();
 
 const Dashboard = () => {
+    const { user, setUser } = useContext(UserContext);
     const [loading, setLoading] = useState(true);
     const [trades, setTrades] = useState({});
     const [buyChecked, setBuyChecked] = useState(false);
@@ -24,8 +25,6 @@ const Dashboard = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const { user } = useContext(UserContext);
-
     const qtyChartRef = useRef(0);
     const invChartRef = useRef(0);
     console.log("user in dashboard", user)
@@ -81,20 +80,32 @@ const Dashboard = () => {
         }
     };
 
-    useEffect(() => {
-
-        document.title = getPageTitle(location.pathname);
-
-        // if (!user || !user.email) {
-        //     navigate("/login")
-        //     return;
-        // }
-        fetchData();
-    }, [buyChecked, sellChecked])
-
-    const onSliceClick = () => {
-        console.log("slice clicked....");
+    const getUserData = async () => {
+        const response = await fetch(`${process.env.REACT_APP_HOST}/isLoggedIn`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include"
+        });
+        const content = await response.json();
+        if (content.success === "true") {
+            setUser(() => { return { id: content.user._id, name: content.user.name, email: content.user.email, contact: content.user.contact, budget: content.user.budget } });
+            console.log("User is : ", user);
+        } else {
+            setUser({});
+        }
     }
+
+    useEffect(() => {
+        getUserData();
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        document.title = getPageTitle(location.pathname);
+        fetchData();
+    }, [buyChecked, sellChecked]);
 
     return (
         loading ? (
@@ -138,15 +149,35 @@ const Dashboard = () => {
             </div >
         ) : (
             trades.length <= 0 ?
-                <div className="h-screen flex flex-col md:flex-row items-center justify-center text-center" style={{ height: "calc(100vh - 64px)" }}>
-                    <div className='m-4'>
-                        <img src={cryptoImg} alt="crypto img" className='max-w-full max-h-80 rounded-md' />
+                <>
+                    <div className="w-full bg-white p-4 flex-shrink-0 md:h-auto rounded-lg shadow-lg ">
+                        <div className="flex flex-col items-center justify-center mb-4">
+                            <h2 className="text-2xl font-bold text-gray-800">{user.name ? user.name : "userName"}</h2>
+                            <h3 className='text-xl font-bold text-gray-600'> {user.email ? user.email : "Email ID"}</h3>
+                        </div>
+                        <div className="mt-8 mr-4">
+                            <h5 className="font-bold uppercase text-gray-500 mb-2">Filters</h5>
+                            <div className="flex flex-col">
+                                <label className="inline-flex items-center mt-3">
+                                    <input type="checkbox" className="form-checkbox h-5 w-5 text-gray-600" checked={buyChecked} name="buyCheckbox" onChange={handleCheckbox} value={buyChecked} />
+                                    <span className="ml-2 text-gray-700">Buy Orders</span>
+                                </label>
+                                <label className="inline-flex items-center mt-3">
+                                    <input type="checkbox" className="form-checkbox h-5 w-5 text-gray-600" checked={sellChecked} name="sellChackbox" onChange={handleCheckbox} value={sellChecked} />
+                                    <span className="ml-2 text-gray-700">Sell Orders</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div className='mx-4'>
-                        <h2 className="text-gray-800 font-bold text-4xl my-4">Your Dashboard is Empty</h2>
-                        <h5 className="text-gray-500 text-2xl">Start investing today</h5>
+                    <div className="h-screen flex flex-col md:flex-row items-center justify-center text-center" style={{ height: "calc(100vh - 64px)" }}>
+                        <div className='m-4'>
+                            <img src={cryptoImg} alt="crypto img" className='max-w-full max-h-80 rounded-md' />
+                        </div>
+                        <div className='mx-4'>
+                            <h2 className="text-gray-800 font-bold text-4xl my-4">Not enough data to display</h2>
+                        </div>
                     </div>
-                </div>
+                </>
                 :
                 <div className="bg-gray-100 flex flex-wrap">
                     <GoToTopButton />
