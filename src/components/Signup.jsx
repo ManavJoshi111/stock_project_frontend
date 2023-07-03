@@ -10,6 +10,9 @@ const Signup = () => {
   const { user, setUser } = useContext(userContext);
   const navigate = useNavigate();
   const [data, setData] = useState();
+
+  const [loading, setLoading] = useState(false);
+
   const handleOnChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   }
@@ -26,7 +29,11 @@ const Signup = () => {
         theme: "dark",
         progress: undefined,
       });
+      return
     }
+
+    setLoading(true);
+
     try {
       const response = await fetch(`${process.env.REACT_APP_HOST}/signup`, {
         method: 'POST',
@@ -48,10 +55,12 @@ const Signup = () => {
           draggable: true,
           theme: "dark"
         });
+        setLoading(false);
         setUser(content.user);
         navigate("../");
       }
       else {
+        setLoading(false);
         toast.error(content.error, {
           position: "top-center",
           autoClose: 1000,
@@ -62,6 +71,7 @@ const Signup = () => {
       }
     }
     catch (err) {
+      setLoading(false);
       toast.error("Internal Error....\nPlease Try Again After Sometime!!!", {
         position: "top-center",
         autoClose: 1000,
@@ -153,8 +163,13 @@ const Signup = () => {
                   type="button"
                   className="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-gray-800 shadow-lg focus:outline-none hover:bg-gray-700 hover:shadow-none"
                   onClick={sendData}
+                  disabled={loading}
                 >
-                  Sign Up
+                  {loading ?
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-gray"></div>
+                    </div> :
+                    "Sign UP"}
                 </button>
                 <div className="text-center pt-3">
                   <NavLink to="/login" className="text-blue-500 hover:text-blue-700 font-semibold">

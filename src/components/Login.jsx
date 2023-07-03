@@ -11,38 +11,56 @@ const Login = () => {
   const [data, setData] = useState();
   const { user, setUser } = useContext(UserContext);
 
+  const [loading, setLoading] = useState(false);
+
   const handleOnChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
 
   };
 
   const sendData = async () => {
+
+    setLoading(true);
     // console.log("Data is : ", data);
-    const response = await fetch(`${process.env.REACT_APP_HOST}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(data),
-    });
-    const content = await response.json();
-    console.log("Response : ", content.error);
-    if (content.success === "true") {
-      toast.success("Login Successfull", {
-        position: "top-center",
-        autoClose: 1000,
-        closeOnClick: true,
-        draggable: true,
-        theme: "dark"
+    try {
+
+      const response = await fetch(`${process.env.REACT_APP_HOST}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(data),
       });
-      console.log("Name : ", content.user.name);
-      setUser(() => { return { id: content.user._id, name: content.user.name, email: content.user.email, contact: content.user.contact, budget: content.user.budget } });
-      console.log("User is : ", user);
-      navigate("../");
-    } else {
-      console.log("Login Unsuccesful");
-      toast.error(content.error, {
+      const content = await response.json();
+      console.log("Response : ", content.error);
+      if (content.success === "true") {
+        toast.success("Login Successfull", {
+          position: "top-center",
+          autoClose: 1000,
+          closeOnClick: true,
+          draggable: true,
+          theme: "dark"
+        });
+        console.log("Name : ", content.user.name);
+        setUser(() => { return { id: content.user._id, name: content.user.name, email: content.user.email, contact: content.user.contact, budget: content.user.budget } });
+        console.log("User is : ", user);
+        setLoading(false);
+        navigate("../");
+      } else {
+        setLoading(false);
+        console.log("Login Unsuccesful");
+        toast.error(content.error, {
+          position: "top-center",
+          autoClose: 1000,
+          closeOnClick: true,
+          draggable: true,
+          theme: "dark"
+        });
+      }
+    } catch (err) {
+      setLoading(false);
+      toast.error("Internal Error....\nPlease Try Again After Sometime!!!", {
         position: "top-center",
         autoClose: 1000,
         closeOnClick: true,
@@ -103,10 +121,16 @@ const Login = () => {
                     />
                     <button
                       type="button"
-                      className="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-gray-800 shadow-lg focus:outline-none hover:bg-gray-700 hover:shadow-none"
+                      className="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-gray-800 shadow-lg focus:outline hover:bg-gray-700 hover:shadow-none"
                       onClick={sendData}
+                      disabled={loading}
                     >
-                      Login
+                      {loading ?
+                        <div className="flex items-center justify-center">
+                          <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-gray"></div>
+                        </div> :
+                        "Login"}
+
                     </button>
                   </div>
                   <div className="text-center pt-3">

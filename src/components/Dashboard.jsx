@@ -105,7 +105,7 @@ const Dashboard = () => {
         loading ? (
             <div className="h-screen flex flex-col md:flex-row bg-gray-100" style={{ height: "calc(100vh - 64px)" }}>
                 <div className="w-full md:w-1/4 bg-white p-4 md:m-4 flex flex-col items-center ">
-                    <Skeleton circle={true} height={200} width={200} />
+                    {/* <Skeleton circle={true} height={200} width={200} /> */}
                     <div className='flex flex-col bg-black-800 w-40 p-2 m-4 text-2xl'>
                         <Skeleton />
                     </div>
@@ -117,14 +117,14 @@ const Dashboard = () => {
                 <div className='w-full md:w-3/4 bg-gray-100 p-2 mt-2 flex-shrink-0 md:flex-grow md:-ml-8'>
                     <Skeleton height={100} />
 
-                    <div className='mt-4 flex flex-col md:flex-row'>
+                    {/* <div className='mt-4 flex flex-col md:flex-row'>
                         <div className='flex-1 md:pr-2 my-2 flex items-center justify-center'>
                             <Skeleton circle={true} height={250} width={250} />
                         </div>
                         <div className='flex-1 md:pl-2 my-2 flex flex-col md:flex-row  items-center justify-center'>
                             <Skeleton circle={true} height={250} width={250} />
                         </div>
-                    </div>
+                    </div> */}
                     <div className="flex flex-wrap justify-center mt-4">
                         <div className="w-full p-3">
                             <div className="bg-white rounded-lg shadow-lg p-5">

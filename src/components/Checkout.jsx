@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import UserContext from "../Context/UserContext";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Checkout = ({ Symbol }) => {
 
@@ -40,6 +40,7 @@ const Checkout = ({ Symbol }) => {
                 draggable: false,
                 theme: "dark",
             });
+            return
         }
 
         const data = {
@@ -225,14 +226,23 @@ const Checkout = ({ Symbol }) => {
                         <label className="text-gray-600 font-medium">Price:</label>
                         <input type="text" className="text-gray-700 font-medium w-1/2 text-right" value={price} readOnly style={{ outline: "unset" }} />
                     </div>
-                    <div className="flex justify-between items-center">
-                        <label className="text-gray-600 font-medium">Quantity:</label>
-                        <input type="number" onChange={handleChange} className="text-gray-700 font-medium w-1/2 text-right border border-gray-400 py-2 px-3 rounded-lg" value={qty} />
-                    </div>
-                    {user.email && <div className="flex justify-between  mt-4">
-                        <label htmlFor="">Holding Quantity : </label>
-                        <p>{holdingQty}</p>
-                    </div>}
+
+                    {user.email ?
+                        <>
+                            <div className="flex justify-between items-center">
+                                <label className="text-gray-600 font-medium">Quantity:</label>
+                                <input type="number" onChange={handleChange} className="text-gray-700 font-medium w-1/2 text-right border border-gray-400 py-2 px-3 rounded-lg" value={qty} />
+                            </div>
+                            <div className="flex justify-between  mt-4">
+                                <label htmlFor="">Holding Quantity : </label>
+                                <p>{holdingQty}</p>
+                            </div>
+                        </> :
+                        <div className="mt-5 flex justify-center flex-col">
+                            <p className="text-lg">Register to trade Cryptos </p>
+                            <Link to={"/signup"} className="py-3 mt-6 font-medium tracking-widest text-white uppercase bg-gray-800 shadow-lg focus:outline hover:bg-gray-700 hover:shadow-none text-center">Register</Link>
+                        </div>
+                    }
                 </div>
                 {user.email && <div className="flex justify-between">
                     <button onClick={handleSell} className="bg-red-500 text-white font-medium py-2 px-4 rounded-lg">Sell</button>

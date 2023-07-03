@@ -17,9 +17,11 @@
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
     "socket.io-client": "^4.5.3",
+    "source-map-explorer": "^2.5.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
