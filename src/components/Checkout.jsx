@@ -170,6 +170,11 @@ const Checkout = ({ Symbol }) => {
     }
 
     const fetchQty = async () => {
+
+        if (!user.email) {
+            return
+        }
+
         try {
 
             const response = await fetch(`${process.env.REACT_APP_HOST}/qty/${Symbol}`, {
@@ -194,6 +199,7 @@ const Checkout = ({ Symbol }) => {
 
     useEffect(() => {
 
+        console.log(Symbol);
 
         fetchQty();
 
