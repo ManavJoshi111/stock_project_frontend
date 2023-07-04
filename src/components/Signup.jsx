@@ -9,10 +9,10 @@ import userContext from '../Context/UserContext';
 const Signup = () => {
   const { user, setUser } = useContext(userContext);
   const navigate = useNavigate();
-  const [data, setData] = useState();
 
   const [loading, setLoading] = useState(false);
 
+  const [data, setData] = useState();
   const handleOnChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   }
@@ -47,6 +47,9 @@ const Signup = () => {
 
     setLoading(true);
 
+    const { cpassword, ...requestData } = data;
+    console.log("requestData : ", requestData);
+
     try {
       const response = await fetch(`${process.env.REACT_APP_HOST}/signup`, {
         method: 'POST',
@@ -54,7 +57,7 @@ const Signup = () => {
           'Content-Type': 'application/json'
         },
         credentials: 'include',
-        body: JSON.stringify(data)
+        body: JSON.stringify(requestData)
       });
       const content = await response.json();
       console.log("Content IS : ", content);
