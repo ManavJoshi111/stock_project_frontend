@@ -75,19 +75,32 @@ const Dashboard = () => {
     };
 
     const getUserData = async () => {
-        const response = await fetch(`${process.env.REACT_APP_HOST}/isLoggedIn`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include"
-        });
-        const content = await response.json();
-        if (content.success === "true") {
-            setUser(() => { return { id: content.user._id, name: content.user.name, email: content.user.email, contact: content.user.contact, budget: content.user.budget } });
-            // console.log("User is : ", user);
-        } else {
-            setUser({});
+        try {
+            const response = await fetch(`${process.env.REACT_APP_HOST}/isLoggedIn`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include"
+            });
+            const content = await response.json();
+            if (content.success === "true") {
+                setUser(() => { return { id: content.user._id, name: content.user.name, email: content.user.email, contact: content.user.contact, budget: content.user.budget } });
+                // console.log("User is : ", user);
+            } else {
+                setUser({});
+            }
+        }
+        catch (err) {
+            console.log(err);
+            toast.error("Something went wrong", {
+                position: "top-center",
+                autoClose: 1000,
+                closeOnClick: true,
+                draggable: true,
+                theme: "dark"
+            });
+            navigate("../login");
         }
     }
 

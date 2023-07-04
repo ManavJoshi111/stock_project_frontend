@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import PageContext from '../Context/PageContext';
 import coinMap from "../modules/coingeko_to_binance_map";
 import Card from './Card'
+import { toast } from "react-toastify";
 import Loading from './Loading';
 
 const Header = () => {
@@ -23,16 +24,36 @@ const Header = () => {
         setRows(page * 9);
     }
     useEffect(() => {
-        // Fetch data from coingecko api and store it in state
-        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=100&page=1&sparkline=false')
-            .then(res => res.json())
-            .then(data => {
-                data.map((item, index) => {
-                    if (item.image && coinMap.get(item.symbol.toUpperCase()) !== undefined) {
-                        setData(prevState => [...prevState, item]);
-                    }
-                })
+        // Update first and rows values when search query changes
+        setFirst(0);
+        setRows(9);
+        setCurrentPage(1);
+    }, [searchQuery]);
+    useEffect(() => {
+        try {
+            fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=100&page=1&sparkline=false')
+                .then(res => res.json())
+                .then(data => {
+                    data.map((item, index) => {
+                        if (item.image && coinMap.get(item.symbol.toUpperCase()) !== undefined) {
+                            setData(prevState => [...prevState, item]);
+                        }
+                    })
+                });
+        }
+        catch (err) {
+            console.log(err);
+            toast.error("Something went wrong", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "dark",
+                progress: undefined,
             });
+        }
     }, []);
     if (data.length === 0) {
         // Loading State Strts
@@ -75,7 +96,7 @@ const Header = () => {
 
 
 
-            <div className="flex justify-center mt-8">
+            <div className="flex justify-center mt-8 mb-3">
                 <nav>
                     <ul className="flex">
                         {pages.map((page, index) => (
