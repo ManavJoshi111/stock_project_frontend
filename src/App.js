@@ -8,6 +8,7 @@ import {
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserContext from "./Context/UserContext";
+import PageContext from "./Context/PageContext";
 import Header from "./components/Header";
 import Login from './components/Login';
 import Signup from "./components/Signup";
@@ -23,6 +24,7 @@ import About from "./components/About";
 
 function App() {
   const [user, setUser] = useState({ name: null, email: null, contact: null });
+  const [currentPage, setCurrentPage] = useState(1);
   const isLoggedIn = async () => {
     const response = await fetch(`${process.env.REACT_APP_HOST}/isLoggedIn`, {
       method: "POST",
@@ -47,20 +49,22 @@ function App() {
     <>
       <Router>
         <UserContext.Provider value={{ user, setUser }}>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Header />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/coin/:id" element={<CoinPage />} />
-            <Route path="/liveprice" element={<LivePrice />} />
-            <Route path="/order/:id" element={<OrderDetails />} />
-            <Route path="/contact" element={<ContactUsPage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="*" element={<Error />} />
-          </Routes>
+          <PageContext.Provider value={{ currentPage, setCurrentPage }}>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Header />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/logout" element={<Logout />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/coin/:id" element={<CoinPage />} />
+              <Route path="/liveprice" element={<LivePrice />} />
+              <Route path="/order/:id" element={<OrderDetails />} />
+              <Route path="/contact" element={<ContactUsPage />} />
+              <Route path="/about" element={<About />} />
+              <Route path="*" element={<Error />} />
+            </Routes>
+          </PageContext.Provider >
         </UserContext.Provider>
       </Router>
       <ToastContainer style={{ width: "400px" }} />

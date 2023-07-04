@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "../styles/index.css";
 import { useNavigate } from 'react-router-dom';
+import PageContext from '../Context/PageContext';
+import coinMap from "../modules/coingeko_to_binance_map";
 import Card from './Card'
 
 const Header = () => {
     const [data, setData] = useState([]);
-    const [rows, setRows] = useState(9);
-    const [first, setFirst] = useState(0);
-    const [currentPage, setCurrentPage] = useState(1);
+    const { currentPage, setCurrentPage } = useContext(PageContext);
+    const [rows, setRows] = useState(9 * currentPage);
+    const [first, setFirst] = useState(currentPage * 9 - 9);
     const navigate = useNavigate();
-    const pages = Array.from({ length: 10 }, (_, i) => i + 1);
+    const pages = Array.from({ length: 8 }, (_, i) => i + 1);
 
     const handleClick = (e) => {
         let page = e.target.value;
@@ -21,7 +23,13 @@ const Header = () => {
         // Fetch data from coingecko api and store it in state
         fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=100&page=1&sparkline=false')
             .then(res => res.json())
-            .then(data => setData(data));
+            .then(data => {
+                data.map((item, index) => {
+                    if (item.image && coinMap.get(item.symbol.toUpperCase()) !== undefined) {
+                        setData(prevState => [...prevState, item]);
+                    }
+                })
+            });
     }, []);
     if (data.length === 0) {
         // Loading State Strts
@@ -38,10 +46,24 @@ const Header = () => {
 
     return (
         <>
+            <div className="flex justify-center p-4">
+                <div className="flex items-center">
+                    <input type="text" placeholder="Search" className="py-2 pl-4 pr-16 border border-black rounded-lg shadow-md focus:outline-none focus:ring-black-500 focus:border-black-500 mx-2" />
+                    <button type="button" className="py-3 font-medium rounded-lg tracking-widest text-white uppercase bg-gray-800 shadow-lg focus:outline hover:bg-gray-700 hover:shadow-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 17l5-5m0 0l-5-5m5 5H4"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+
+
+
             <div className="flex justify-center">
                 <div className="flex flex-wrap justify-center">
                     {data.slice(first, rows).map((item, index) => {
-                        if (item.image) {
+                        if (item.image && coinMap.get(item.symbol.toUpperCase()) !== undefined) {
                             return (
                                 <div className="transition delay-150 mt-3 mx-3 hover:cursor-pointer hover:shadow-xl" >
                                     <Card item={item} key={index} />

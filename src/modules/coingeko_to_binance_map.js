@@ -1,80 +1,259 @@
 let coinMap = new Map([
-    ["BTC", "BTCUSDT"],
-    ["ETH", "ETHUSDT"],
-    ["USDT", "USDTTRY"],
-    ["BNB", "BNBUSDT"],
-    ["USDC", "USDCUSDT"],
-    ["XRP", "XRPUSDT"],
-    ["ADA", "ADAUSDT"],
-    ["MATIC", "MATICUSDT"],
-    ["DOGE", "DOGEUSDT"],
-    ["BUSD", "BUSDUSDT"],
-    ["SOL", "SOLUSDT"],
-    ["DOT", "DOTUSDT"],
-    ["SHIB", "SHIBUSDT"],
-    ["LTC", "LTCUSDT"],
-    ["TRX", "TRXUSDT"],
-    ["AVAX", "AVAXUSDT"],
-    ["DAI", "DAIUSDT"],
-    ["UNI", "UNIUSDT"],
-    ["WUSDT", "WUSDTUSDT"],
-    ["ATOM", "ATOMUSDT"],
-    ["LINK", "LINKUSDT"],
-    ["ETC", "ETCUSDT"],
-    ["XMR", "XMRUSDT"],
-    ["FIL", "FILUSDT"],
-    ["BCH", "BCHUSDT"],
-    ["LDO", "LDOBUSDT"],
-    ["XLM", "XLMUSDT"],
-    ["APT", "APTUSDT"],
-    ["HBAR", "HBARUSDT"],
-    ["NEAR", "NEARUSDT"],
-    ["VET", "VETUSDT"],
-    ["QNT", "QNTUSDT"],
-    ["APE", "APEUSDT"],
-    ["ICP", "ICPUSDT"],
-    ["ALGO", "ALGOUSDT"],
-    ["GRT", "GRTUSDT"],
-    ["FTM", "FTMUSDT"],
-    ["FLOW", "FLOWUSDT"],
-    ["SAND", "SANDUSDT"],
-    ["THETA", "THETAUSDT"],
-    ["EOS", "EOSUSDT"],
-    ["MANA", "MANAUSDT"],
-    ["EGLD", "EGLDUSDT"],
-    ["AAVE", "AAVEUSDT"],
-    ["AXS", "AXSUSDT"],
-    ["XTZ", "XTZUSDT"],
-    ["TUSD", "TUSDUSDT"],
-    ["LUNC", "LUNCBUSDT"],
-    ["STX", "STXUSDT"],
-    ["RPL", "RPLUSDT"],
-    ["KLAY", "KLAYUSDT"],
-    ["NEO", "NEOUSDT"],
-    ["SNX", "SNXUSDT"],
-    ["IMX", "IMXUSDT"],
-    ["MINA", "MINAUSDT"],
-    ["DASH", "DASHUSDT"],
-    ["FXS", "FXSUSDT"],
-    ["CAKE", "CAKEUSDT"],
-    ["CRV", "CRVUSDT"],
-    ["USDP", "USDPBUSDT"],
-    ["CHZ", "CHZUSDT"],
-    ["BTT", "BTTUSDT"],
-    ["XEC", "XECBUSDT"],
-    ["MKR", "MKRUSDT"],
-    ["GMX", "GMXUSDT"],
-    ["OP", "OPUSDT"],
-    ["TWT", "TWTUSDT"],
-    ["ZEC", "ZECUSDT"],
-    ["OSMO", "OSMOUSDT"],
-    ["ZIL", "ZILUSDT"],
-    ["AR", "ARUSDT"],
-    ["CFX", "CFXUSDT"],
-    ["AGIX", "AGIXUSDT"],
-    ["RUNE", "RUNEUSDT"],
-    ["ENJ", "ENJUSDT"],
-    ["1INCH", "1INCHUSDT"],
-    ["LRC", "LRCUSDT"]
+    [
+        "BTC",
+        "BTCUSDT"
+    ],
+    [
+        "ETH",
+        "ETHUSDT"
+    ],
+    [
+        "USDT",
+        "USDTUSDT"
+    ],
+    [
+        "BNB",
+        "BNBUSDT"
+    ],
+    [
+        "USDC",
+        "USDCUSDT"
+    ],
+    [
+        "XRP",
+        "XRPUSDT"
+    ],
+    [
+        "ADA",
+        "ADAUSDT"
+    ],
+    [
+        "DOGE",
+        "DOGEUSDT"
+    ],
+    [
+        "LTC",
+        "LTCUSDT"
+    ],
+    [
+        "SOL",
+        "SOLUSDT"
+    ],
+    [
+        "TRX",
+        "TRXUSDT"
+    ],
+    [
+        "DOT",
+        "DOTUSDT"
+    ],
+    [
+        "MATIC",
+        "MATICUSDT"
+    ],
+    [
+        "BCH",
+        "BCHUSDT"
+    ],
+    [
+        "AVAX",
+        "AVAXUSDT"
+    ],
+    [
+        "SHIB",
+        "SHIBUSDT"
+    ],
+    [
+        "DAI",
+        "USDTDAI"
+    ],
+    [
+        "UNI",
+        "UNIUSDT"
+    ],
+    [
+        "BUSD",
+        "BUSDUSDT"
+    ],
+    [
+        "LINK",
+        "LINKUSDT"
+    ],
+    [
+        "XMR",
+        "XMRUSDT"
+    ],
+    [
+        "TUSD",
+        "TUSDUSDT"
+    ],
+    [
+        "ATOM",
+        "ATOMUSDT"
+    ],
+    [
+        "XLM",
+        "XLMUSDT"
+    ],
+    [
+        "ETC",
+        "ETCUSDT"
+    ],
+    [
+        "FIL",
+        "FILUSDT"
+    ],
+    [
+        "ICP",
+        "ICPUSDT"
+    ],
+    [
+        "LDO",
+        "LDOUSDT"
+    ],
+    [
+        "APT",
+        "APTUSDT"
+    ],
+    [
+        "HBAR",
+        "HBARUSDT"
+    ],
+    [
+        "QNT",
+        "QNTUSDT"
+    ],
+    [
+        "VET",
+        "VETUSDT"
+    ],
+    [
+        "NEAR",
+        "NEARUSDT"
+    ],
+    [
+        "GRT",
+        "GRTUSDT"
+    ],
+    [
+        "AAVE",
+        "AAVEUSDT"
+    ],
+    [
+        "STX",
+        "STXUSDT"
+    ],
+    [
+        "USDP",
+        "USDPUSDT"
+    ],
+    [
+        "ALGO",
+        "ALGOUSDT"
+    ],
+    [
+        "EGLD",
+        "EGLDUSDT"
+    ],
+    [
+        "FTM",
+        "FTMUSDT"
+    ],
+    [
+        "MKR",
+        "MKRUSDT"
+    ],
+    [
+        "OP",
+        "OPUSDT"
+    ],
+    [
+        "SAND",
+        "SANDUSDT"
+    ],
+    [
+        "EOS",
+        "EOSUSDT"
+    ],
+    [
+        "APE",
+        "APEUSDT"
+    ],
+    [
+        "XTZ",
+        "XTZUSDT"
+    ],
+    [
+        "IMX",
+        "IMXUSDT"
+    ],
+    [
+        "THETA",
+        "THETAUSDT"
+    ],
+    [
+        "RPL",
+        "RPLUSDT"
+    ],
+    [
+        "MANA",
+        "MANAUSDT"
+    ],
+    [
+        "AXS",
+        "AXSUSDT"
+    ],
+    [
+        "SNX",
+        "SNXUSDT"
+    ],
+    [
+        "FLOW",
+        "FLOWUSDT"
+    ],
+    [
+        "CRV",
+        "CRVUSDT"
+    ],
+    [
+        "NEO",
+        "NEOUSDT"
+    ],
+    [
+        "XEC",
+        "XECUSDT"
+    ],
+    [
+        "KLAY",
+        "KLAYUSDT"
+    ],
+    [
+        "GMX",
+        "GMXUSDT"
+    ],
+    [
+        "LUNC",
+        "LUNCUSDT"
+    ],
+    [
+        "MINA",
+        "MINAUSDT"
+    ],
+    [
+        "FXS",
+        "FXSUSDT"
+    ],
+    [
+        "BTT",
+        "BTTCUSDT"
+    ],
+    [
+        "CFX",
+        "CFXUSDT"
+    ],
+    [
+        "DASH",
+        "DASHUSDT"
+    ]
 ]);
 module.exports = coinMap;

@@ -24,6 +24,7 @@ const Chart = ({ Symbol }) => {
     let ws = null;
 
     useEffect(() => {
+        console.log("Date in useeffect : " + midnight + "  /  " + now);
         getDataAndUpdateChart(midnight, now, "1m");
 
         startWebSocketData("1m");
@@ -132,8 +133,10 @@ const Chart = ({ Symbol }) => {
         };
         const secondHalf = {
             start: secondHalfStart.getTime(),
-            end: endOfDay.getTime()
+            end: now.getTime()
         };
+
+        console.log("Date : " + new Date(firstHalf.start) + " to " + new Date(firstHalf.end) + "  /  " + new Date(secondHalf.start) + " to " + new Date(secondHalf.end));
 
         fetch(
             `https://api.binance.com/api/v3/uiKlines?symbol=${Symbol}&interval=${interval}&startTime=${firstHalf.start}&endTime=${firstHalf.end}&limit=1000`
@@ -280,9 +283,10 @@ const Chart = ({ Symbol }) => {
                         ref={chartRef}
                         // tooltipTemplate={CustomTooltip}
                         toolTipType="data"
-                        xAxisAutoScale={false}
+                        xAxisAutoScale={true}
                         xAxisMod="time"
-                        xAxisLabelVisibility="collapsed"
+                        xAxisVisibility={true}
+                        // xAxisLabelVisibility="collapsedis"
                         width="100%"
                         height="100%"
                         isToolbarVisible={false}

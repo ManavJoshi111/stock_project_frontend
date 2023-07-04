@@ -18,6 +18,19 @@ const Signup = () => {
   }
   const sendData = async () => {
     console.log("Data : ", data);
+    if (!data || !data.name || !data.email || !data.contact || !data.password || !data.cpassword) {
+      toast.error("Please Fill All The Fields", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+        progress: undefined,
+      });
+      return;
+    }
     if (data.password !== data.cpassword) {
       toast.error("Password and Confirm Password should be same", {
         position: "top-center",
@@ -29,7 +42,7 @@ const Signup = () => {
         theme: "dark",
         progress: undefined,
       });
-      return
+      return;
     }
 
     setLoading(true);
