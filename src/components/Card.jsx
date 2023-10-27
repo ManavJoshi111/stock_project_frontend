@@ -17,7 +17,7 @@ const Card = (props) => {
                         </div>
                     </div>
 
-                    <p className="text-lg font-medium">{'$ ' + item.current_price.toLocaleString("en-US")}</p>
+                    <p className="text-lg font-medium">{'INR ' + item.current_price.toLocaleString("en-US")}</p>
                     <p className={"text-lg " + (item.price_change_percentage_24h > 0 ? "text-green-600" : "text-red-600")}>
                         {item.price_change_percentage_24h} %</p>
                 </div>
