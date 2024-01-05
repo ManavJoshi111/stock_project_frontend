@@ -1,6 +1,6 @@
 # Stocks_Project_Frontend
 
-This repo contains frontend for the project CryptoX, which is a Paper trading MERN Stack Website.
+This repository contains frontend for the project CryptoX, which is a Paper trading MERN Stack Website.
 
 ## Installation
 
