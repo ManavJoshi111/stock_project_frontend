@@ -5,12 +5,13 @@ import {
   Routes,
   // NavLink,
 } from "react-router-dom";
+import "./styles/index.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserContext from "./Context/UserContext";
 import PageContext from "./Context/PageContext";
 import Header from "./components/Header";
-import Login from './components/Login';
+import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
@@ -30,17 +31,15 @@ function App() {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include"
+      credentials: "include",
     });
     const content = await response.json();
     if (content.success === "true") {
-      console.log("Content : ", content);
-      console.log("User : ", content.user);
       setUser({ id: content.user._id, ...content.user });
     } else {
       setUser({});
     }
-  }
+  };
   useEffect(() => {
     isLoggedIn();
   }, []);
@@ -62,7 +61,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="*" element={<Error />} />
             </Routes>
-          </PageContext.Provider >
+          </PageContext.Provider>
         </UserContext.Provider>
       </Router>
       <ToastContainer style={{ width: "400px" }} />

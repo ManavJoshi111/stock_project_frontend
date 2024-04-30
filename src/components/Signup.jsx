@@ -1,10 +1,10 @@
-import React from 'react'
-import { useState, useContext } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React from "react";
+import { useState, useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 // import { InputText } from 'primereact/inputtext';
 // import { Button } from 'primereact/button';
 import { toast } from "react-toastify";
-import userContext from '../Context/UserContext';
+import userContext from "../Context/UserContext";
 
 const Signup = () => {
   const { user, setUser } = useContext(userContext);
@@ -15,10 +15,16 @@ const Signup = () => {
   const [data, setData] = useState();
   const handleOnChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
-  }
+  };
   const sendData = async () => {
-    console.log("Data : ", data);
-    if (!data || !data.name || !data.email || !data.contact || !data.password || !data.cpassword) {
+    if (
+      !data ||
+      !data.name ||
+      !data.email ||
+      !data.contact ||
+      !data.password ||
+      !data.cpassword
+    ) {
       toast.error("Please Fill All The Fields", {
         position: "top-center",
         autoClose: 3000,
@@ -52,12 +58,12 @@ const Signup = () => {
 
     try {
       const response = await fetch(`${process.env.REACT_APP_HOST}/signup`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        credentials: 'include',
-        body: JSON.stringify(requestData)
+        credentials: "include",
+        body: JSON.stringify(requestData),
       });
       const content = await response.json();
       console.log("Content IS : ", content);
@@ -69,57 +75,67 @@ const Signup = () => {
           autoClose: 1000,
           closeOnClick: true,
           draggable: true,
-          theme: "dark"
+          theme: "dark",
         });
         setLoading(false);
         setUser(content.user);
         navigate("../");
-      }
-      else {
+      } else {
         setLoading(false);
         toast.error(content.error, {
           position: "top-center",
           autoClose: 1000,
           closeOnClick: true,
           draggable: true,
-          theme: "dark"
+          theme: "dark",
         });
       }
-    }
-    catch (err) {
+    } catch (err) {
       setLoading(false);
       toast.error("Internal Error....\nPlease Try Again After Sometime!!!", {
         position: "top-center",
         autoClose: 1000,
         closeOnClick: true,
         draggable: true,
-        theme: "dark"
+        theme: "dark",
       });
     }
-  }
+  };
   if (user && user.email) {
     toast.error("You are already logged in", {
       position: "top-center",
       autoClose: 1000,
       closeOnClick: true,
       draggable: true,
-      theme: "dark"
+      theme: "dark",
     });
     navigate("../");
-  }
-  else {
+  } else {
     return (
       <>
         <div className="container flex justify-center">
-          < div className="w-full max-w-xs" >
+          <div className="w-full max-w-xs">
             <div className="flex flex-col break-words bg-white border border-2 shadow-md mt-20">
               <div className="text-3xl text-gray-700 uppercase text-center py-3 px-6 mb-0">
                 Sign UP
               </div>
-              <a className="mt-1 mb-2 g-signin2" onClick={() => { window.open(process.env.REACT_APP_GOOGLE_AUTH_URL, '_self') }} ><span className="g-icon"></span>Sign UP with Google</a>
+              <a
+                className="mt-1 mb-2 g-signin2"
+                onClick={() => {
+                  window.open(
+                    "https://stocks-project-backend.onrender.com/auth/google",
+                    "_self"
+                  );
+                }}
+              >
+                <span className="g-icon"></span>Signup with Google
+              </a>
 
               <form className="py-6 px-5">
-                <label htmlFor="name" className="block text-gray-700 text-lg font-bold mb-2">
+                <label
+                  htmlFor="name"
+                  className="block text-gray-700 text-lg font-bold mb-2"
+                >
                   Name:
                 </label>
                 <input
@@ -130,7 +146,10 @@ const Signup = () => {
                   onChange={handleOnChange}
                   className="p-3 bg-gray-200 rounded form-input w-full"
                 />
-                <label htmlFor="email" className="block text-gray-700 text-lg font-bold mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-gray-700 text-lg font-bold mb-2"
+                >
                   Email:
                 </label>
                 <input
@@ -141,7 +160,10 @@ const Signup = () => {
                   onChange={handleOnChange}
                   className="p-3 bg-gray-200 rounded form-input w-full"
                 />
-                <label htmlFor="contact" className="block text-gray-700 text-lg font-bold mb-2">
+                <label
+                  htmlFor="contact"
+                  className="block text-gray-700 text-lg font-bold mb-2"
+                >
                   Contact:
                 </label>
                 <input
@@ -152,7 +174,10 @@ const Signup = () => {
                   onChange={handleOnChange}
                   className="p-3 bg-gray-200 rounded form-input w-full"
                 />
-                <label htmlFor="password" className="block text-gray-700 text-lg font-bold mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-gray-700 text-lg font-bold mb-2"
+                >
                   Password:
                 </label>
                 <input
@@ -163,11 +188,13 @@ const Signup = () => {
                   onChange={handleOnChange}
                   className="p-3 bg-gray-200 rounded form-input w-full"
                 />
-                <label htmlFor="cpassword" className="block text-gray-700 text-lg font-bold mb-2">
+                <label
+                  htmlFor="cpassword"
+                  className="block text-gray-700 text-lg font-bold mb-2"
+                >
                   Confirm Password:
                 </label>
                 <input
-
                   type="password"
                   name="cpassword"
                   id="cpassword"
@@ -181,14 +208,19 @@ const Signup = () => {
                   onClick={sendData}
                   disabled={loading}
                 >
-                  {loading ?
+                  {loading ? (
                     <div className="flex items-center justify-center">
                       <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-gray"></div>
-                    </div> :
-                    "Sign UP"}
+                    </div>
+                  ) : (
+                    "Sign UP"
+                  )}
                 </button>
                 <div className="text-center pt-3">
-                  <NavLink to="/login" className="text-blue-500 hover:text-blue-700 font-semibold">
+                  <NavLink
+                    to="/login"
+                    className="text-blue-500 hover:text-blue-700 font-semibold"
+                  >
                     Already have an account?
                   </NavLink>
                 </div>
@@ -197,9 +229,8 @@ const Signup = () => {
           </div>
         </div>
       </>
-    )
+    );
   }
-}
+};
 
 export default Signup;
-
