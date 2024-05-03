@@ -88,7 +88,7 @@ const Login = () => {
       return (
         <>
           {/* Add login with google button */}
-          <div className="container flex justify-center">
+          <div className="container-fluid flex align-center h-100 justify-center">
             <div className="w-full max-w-xs">
               <div className="flex flex-col break-words bg-white border-2 shadow-md mt-20">
                 <div className="text-3xl text-gray-700 uppercase text-center py-3 px-6 mb-0">

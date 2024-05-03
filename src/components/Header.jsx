@@ -11,6 +11,7 @@ const Header = () => {
   const { currentPage, setCurrentPage } = useContext(PageContext);
   const [searchQuery, setSearchQuery] = useState("");
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const itemsPerPage = 9;
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -20,6 +21,7 @@ const Header = () => {
 
   const fetchData = async () => {
     try {
+      setLoading(true);
       const response = await fetch(
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=100&page=1&sparkline=false"
       );
@@ -42,6 +44,8 @@ const Header = () => {
         theme: "dark",
         progress: undefined,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -71,51 +75,77 @@ const Header = () => {
     setTotalPages(Math.ceil(dataLength / itemsPerPage));
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
-      <div className="flex justify-center p-4 ">
-        <div className="flex items-center">
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex justify-center mb-8">
           <input
             type="text"
             placeholder="Search"
-            className="py-2 pl-4 pr-16 border border-black rounded-lg shadow-md focus:outline-none focus:ring-black-500 focus:border-black-500 mx-2"
+            className="py-2 px-4 border border-black rounded-lg shadow-md focus:outline-none focus:ring-black-500 focus:border-black-500"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-      </div>
 
-      <div className="flex justify-center">
-        <div className="flex flex-wrap justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center">
           {filteredData.slice(startIndex, endIndex).map((item) => (
             <div
               key={item.id}
-              className="transition delay-150 mt-3 mx-3 hover:cursor-pointer hover:shadow-xl"
+              className="transition border border-black delay-150 hover:cursor-pointer hover:shadow-xl"
             >
               <Card item={item} />
             </div>
           ))}
         </div>
-      </div>
 
-      <div className="flex justify-center mt-8 mb-3">
-        <nav>
-          <ul className="flex">
-            {pages.map((page) => (
-              <li
-                key={page}
-                className={`${
-                  currentPage === page
-                    ? "bg-gray-800 text-white"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300 shadow-lg"
-                } px-3 py-2 cursor-pointer rounded-full mr-2`}
-                onClick={() => handlePageClick(page)}
-              >
-                {page}
+        <div className="flex justify-center mt-8">
+          <nav>
+            <ul className="flex">
+              <li className="mr-2">
+                <button
+                  className={`${
+                    currentPage === 1
+                      ? "bg-gray-800 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300 shadow-lg"
+                  } px-3 py-2 cursor-pointer rounded-full`}
+                  onClick={() => handlePageClick(1)}
+                >
+                  First
+                </button>
               </li>
-            ))}
-          </ul>
-        </nav>
+              {pages.map((page) => (
+                <li
+                  key={page}
+                  className={`${
+                    currentPage === page
+                      ? "bg-gray-800 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300 shadow-lg"
+                  } px-3 py-2 cursor-pointer rounded-full mr-2`}
+                  onClick={() => handlePageClick(page)}
+                >
+                  {page}
+                </li>
+              ))}
+              <li className="ml-2">
+                <button
+                  className={`${
+                    currentPage === totalPages
+                      ? "bg-gray-800 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300 shadow-lg"
+                  } px-3 py-2 cursor-pointer rounded-full`}
+                  onClick={() => handlePageClick(totalPages)}
+                >
+                  Last
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </>
   );

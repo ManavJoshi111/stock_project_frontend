@@ -113,9 +113,9 @@ const Signup = () => {
   } else {
     return (
       <>
-        <div className="container flex justify-center">
-          <div className="w-full max-w-xs">
-            <div className="flex flex-col break-words bg-white border border-2 shadow-md mt-20">
+        <div className="container-fluid flex justify-center">
+          <div className="w-full max-w-sm">
+            <div className="flex flex-col break-words bg-white border-2 shadow-md mt-20">
               <div className="text-3xl text-gray-700 uppercase text-center py-3 px-6 mb-0">
                 Sign UP
               </div>
@@ -134,7 +134,7 @@ const Signup = () => {
               <form className="py-6 px-5">
                 <label
                   htmlFor="name"
-                  className="block text-gray-700 text-lg font-bold mb-2"
+                  className="block text-gray-700 text-lg font-bold mb-1"
                 >
                   Name:
                 </label>
@@ -148,7 +148,7 @@ const Signup = () => {
                 />
                 <label
                   htmlFor="email"
-                  className="block text-gray-700 text-lg font-bold mb-2"
+                  className="block text-gray-700 text-lg font-bold mb-1 mt-2"
                 >
                   Email:
                 </label>
@@ -162,7 +162,7 @@ const Signup = () => {
                 />
                 <label
                   htmlFor="contact"
-                  className="block text-gray-700 text-lg font-bold mb-2"
+                  className="block text-gray-700 text-lg font-bold mb-1 mt-3"
                 >
                   Contact:
                 </label>
@@ -176,7 +176,7 @@ const Signup = () => {
                 />
                 <label
                   htmlFor="password"
-                  className="block text-gray-700 text-lg font-bold mb-2"
+                  className="block text-gray-700 text-lg font-bold mb-1 mt-3"
                 >
                   Password:
                 </label>
@@ -190,7 +190,7 @@ const Signup = () => {
                 />
                 <label
                   htmlFor="cpassword"
-                  className="block text-gray-700 text-lg font-bold mb-2"
+                  className="block text-gray-700 text-lg font-bold mb-1 mt-3"
                 >
                   Confirm Password:
                 </label>
