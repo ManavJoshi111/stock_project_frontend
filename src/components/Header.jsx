@@ -4,6 +4,7 @@ import coinMap from "../modules/coingeko_to_binance_map";
 import Card from "./Card";
 import { toast } from "react-toastify";
 import Loading from "./Loading";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   const [data, setData] = useState([]);
@@ -81,6 +82,16 @@ const Header = () => {
 
   return (
     <>
+      <h1 class="text-lg text-center text-red-600 bg-red-100 rounded">
+        Due to issues with mapping of APIs this site uses, certain
+        cryptocurrency pages may not work as expected. We sincerely apologize
+        for any inconvenience this may cause. please contact us for further
+        information from
+        <NavLink to="/about" className="text-blue-500 hover:underline ml-1">
+          here
+        </NavLink>
+      </h1>
+
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-center mb-8">
           <input
@@ -115,7 +126,7 @@ const Header = () => {
                   } px-3 py-2 cursor-pointer rounded-full`}
                   onClick={() => handlePageClick(1)}
                 >
-                  First
+                  &lt;
                 </button>
               </li>
               {pages.map((page) => (
@@ -140,7 +151,7 @@ const Header = () => {
                   } px-3 py-2 cursor-pointer rounded-full`}
                   onClick={() => handlePageClick(totalPages)}
                 >
-                  Last
+                  &gt;
                 </button>
               </li>
             </ul>
